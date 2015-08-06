@@ -37,4 +37,25 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HierarchyInfrastructure\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HierarchyInfrastructure\CloneableObjectTest.cs" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <DotNetNamingPolicy DirectoryNamespaceAssociation="Hierarchical" ResourceNamePolicy="FileFormatDefault" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\Pablo\Pablo.csproj">
+      <Project>{84AC490C-5A4E-4E88-9E49-E4CE5BE788B7}</Project>
+      <Name>Pablo</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
