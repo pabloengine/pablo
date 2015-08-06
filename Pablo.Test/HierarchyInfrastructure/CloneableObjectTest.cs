@@ -1,7 +1,13 @@
-﻿using NUnit.Framework;
+﻿/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ * Copyright (c) 2015, MPL Ali Taheri Moghaddar ali.taheri.m@gmail.com
+ */
+
+using NUnit.Framework;
 using Pablo;
 using System;
-using NUnit.Framework.Constraints;
 
 namespace HierarchyInfrastructure
 {
@@ -44,7 +50,7 @@ namespace HierarchyInfrastructure
             Assert.Fail("The Exception must be thrown since its an unexpected case!");
         }
 
-        [TestCase(Description = "Must Throw CloneException that holds a reference to our Lawyer and hold it's type.")]
+        [TestCase(Description = "Must Throw CloneException that holds a reference to our _theLawyer and hold it's type.")]
         public void TestliarClonable()
         {
             try
