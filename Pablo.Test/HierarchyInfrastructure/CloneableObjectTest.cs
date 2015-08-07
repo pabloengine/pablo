@@ -1,4 +1,5 @@
-﻿/* This Source Code Form is subject to the terms of the Mozilla Public
+﻿/* 
+ * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
  * 
@@ -14,58 +15,53 @@ namespace HierarchyInfrastructure
     [TestFixture]
     public class CloneableObjectTest
     {
-        GoodCloneableObject _goodGuy;
-        BadCloneableObject _badGuy;
-        LiarCloneableObject _theLawyer;
-
-        [SetUp]
-        public void Setup()
-        {
-            _goodGuy = new GoodCloneableObject();
-            _badGuy = new BadCloneableObject(13);
-            _theLawyer = new LiarCloneableObject(999);
-        }
-
-        [TestCase(Description = "Must make a new instance of GoodCloneableObject and check the property.")]
+        [Test(Description = "Must make a new instance of GoodCloneableObject with matching field values.")]
         public void TestGoodClonable()
         {
-            var goodGuy2 = (GoodCloneableObject)_goodGuy.Clone();
-            Assert.AreEqual(_goodGuy.SomeProperty, goodGuy2.SomeProperty);
+            var goodguy = new GoodCloneableObject();
+            var goodGuy2 = (GoodCloneableObject)goodguy.Clone();
+            Assert.AreEqual(goodguy.SomeProperty, goodGuy2.SomeProperty);
         }
 
-        [TestCase(Description = "Must Throw CloneException that holds a reference to our _badGuy and hold it's type.")]
+        [Test(Description = "Must Throw CloneException that holds a reference to our badGuy and hold it's type.")]
         public void TestBadClonable()
         {
+            var badGuy = new BadCloneableObject(13);
+
             try
             {
-                _badGuy.Clone();
+                badGuy.Clone();
             }
             catch (Exception e)
             {
                 Assert.IsInstanceOf<CloneException>(e);
-                Assert.AreSame(((CloneException)e).TargetObject, _badGuy);
-                Assert.AreSame(((CloneException)e).TargetType, _badGuy.GetType());
+                Assert.AreSame(((CloneException)e).TargetObject, badGuy);
+                Assert.AreSame(((CloneException)e).TargetType, badGuy.GetType());
                 return;
             }
             Assert.Fail("The Exception must be thrown since its an unexpected case!");
         }
 
-        [TestCase(Description = "Must Throw CloneException that holds a reference to our _theLawyer and hold it's type.")]
+        [Test(Description = "Must Throw CloneException that holds a reference to our theLawyer and hold it's type.")]
         public void TestliarClonable()
         {
+            var theLawyer = new LiarCloneableObject(13);
+
             try
             {
-                _theLawyer.Clone();
+                theLawyer.Clone();
             }
             catch (Exception e)
             {
                 Assert.IsInstanceOf<CloneException>(e);
-                Assert.AreSame(((CloneException)e).TargetObject, _theLawyer);
-                Assert.AreSame(((CloneException)e).TargetType, _theLawyer.GetType());
+                Assert.AreSame(((CloneException)e).TargetObject, theLawyer);
+                Assert.AreSame(((CloneException)e).TargetType, theLawyer.GetType());
                 return;
             }
             Assert.Fail("The Exception must be thrown since its an unexpected case!");
         }
+
+        #region Mock Implementations
 
         /// <summary>
         /// A nicely implemented <see cref="CloneableObject"/>.
@@ -129,5 +125,8 @@ namespace HierarchyInfrastructure
                 return new GoodCloneableObject(); // A "Lie" that results from careless copy-pastes.
             }
         }
+
+        #endregion
+
     }
 }

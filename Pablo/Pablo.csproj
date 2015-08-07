@@ -36,6 +36,8 @@
       <DeployService-Deploy>True</DeployService-Deploy>
     </Compile>
     <Compile Include="HierarchyInfrastructure\CloneException.cs" />
+    <Compile Include="HierarchyInfrastructure\HierarchicalProperty.cs" />
+    <Compile Include="HierarchyInfrastructure\PropertyException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -1,6 +1,9 @@
-﻿/* This Source Code Form is subject to the terms of the Mozilla Public
+﻿/* 
+ * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ * Copyright (c) 2015, MPL Ali Taheri Moghaddar ali.taheri.m@gmail.com
  */
 
 using System;
@@ -17,7 +20,9 @@ namespace Pablo
         /// </summary>
         /// <remarks>
         /// Mostly meant for the <see cref="HierarchicalObject"/> to automate property cloning.
-        /// Use this within your code with caution.
+        /// Use this within your code with caution. 
+        /// This function will call CreateInstanceOverride to get a new instance.
+        /// This function will call CloneOverride to update properties.
         /// </remarks>
         /// <exception cref="CloneException">Cloning failed</exception>
         public CloneableObject Clone()
@@ -67,7 +72,7 @@ namespace Pablo
         {
         }
 
-        #region Implementation: ICloneable
+        #region Implementation of ICloneable
 
         /// <summary>
         /// Clone this instance.
