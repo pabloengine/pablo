@@ -26,7 +26,7 @@ namespace HierarchyInfrastructure
             Assert.Throws<ArgumentException>(() => new HierarchicalProperty(GetType(), "", GetType(), false, null, null, null));
         }
 
-        [Test(Description = "The default property must act as expected.")]
+        [Test(Description = "The default property must act as expected")]
         public void TestDefault()
         {
             // Automatic default
@@ -41,37 +41,39 @@ namespace HierarchyInfrastructure
             var mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(bool), false, null, () => null, null);
             Assert.Throws<PropertyException>(() => mustFail.Default.GetType());
 
-
             // Faulty factory (the factory throws exception)
             mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(bool), false, null, () => {
                 throw null;
             }, null);
             Assert.Throws<PropertyException>(() => mustFail.Default.GetType());
 
-
             // Faulty factory (returns the wront type)
             mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(double), false, null, () => 1, null);
             Assert.Throws<PropertyException>(() => mustFail.Default.GetType());
         }
 
-        [Test(Description = "The cloner must act as expected.")]
+        [Test(Description = "The cloner must act as expected")]
         public void TestCloner()
         {
             // The clone is the object itself (very efficient if the type is immutable)
             var goodProperty = new HierarchicalProperty(GetType(), "Foo", typeof(object), false, null, null, o => o);
             var obj = new object();
+            Assert.IsTrue(goodProperty.IsCloneable, "Cloner method provided");
             Assert.AreSame(obj, goodProperty.Clone(obj));
 
             // Must clone automatically
             goodProperty = new HierarchicalProperty(GetType(), "Foo", typeof(double), false, null, null, null);
+            Assert.IsTrue(goodProperty.IsCloneable, "Is primitive");
             Assert.AreEqual(14.0, (double)goodProperty.Clone(14.0));
 
             // Must return null
             goodProperty = new HierarchicalProperty(GetType(), "Foo", typeof(object), false, null, null, null);
+            Assert.IsFalse(goodProperty.IsCloneable, "Is object and no cloner provided");
             Assert.IsNull(goodProperty.Clone(null));
 
             // Must fail from type mismatch
             var mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(double), false, null, null, o => (int)(double)o);
+            Assert.IsTrue(mustFail.IsCloneable, "Cloner method provided");
             Assert.Throws<ArgumentException>(() => mustFail.Clone(1)); // Wrong argument type
             Assert.Throws<PropertyException>(() => mustFail.Clone(1.0)); // Wrong type returned by the cloner
         }
@@ -83,23 +85,28 @@ namespace HierarchyInfrastructure
             // string returns itself
             var goodProperty = new HierarchicalProperty(GetType(), "Foo", typeof(string), false, null, null, null);
             var str = 1.ToString();
+            Assert.IsTrue(goodProperty.IsParsable, "Is string");
             Assert.AreSame(str, goodProperty.Parse(str));
 
             // Must parse automatically
             goodProperty = new HierarchicalProperty(GetType(), "Foo", typeof(double), false, null, null, null);
+            Assert.IsTrue(goodProperty.IsParsable, "Is primitive");
             Assert.AreEqual(14.0, (double)goodProperty.Parse("14.0"));
 
             // Must parse nullable types automatically too.
             goodProperty = new HierarchicalProperty(GetType(), "Foo", typeof(DateTime?), false, null, null, null);
             var now = DateTime.Now;
+            Assert.IsTrue(goodProperty.IsParsable, "Is Nullable with an underlying type understood by the Convert");
             Assert.AreEqual(Convert.ToDateTime(now.ToString()), (DateTime)goodProperty.Parse(now.ToString()));
 
             // Must throw on null
-            goodProperty = new HierarchicalProperty(GetType(), "Foo", typeof(object), false, null, null, null);
-            Assert.Throws<ArgumentNullException>(() => goodProperty.Parse(null));
+            var mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(object), false, null, null, null);
+            Assert.IsFalse(mustFail.IsParsable, "Is object and no parser provided");
+            Assert.Throws<ArgumentNullException>(() => mustFail.Parse(null));
 
             // Must fail from type mismatch
-            var mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(double), false, s => int.Parse(s), null, null);
+            mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(double), false, s => int.Parse(s), null, null);
+            Assert.IsTrue(mustFail.IsParsable, "Parser method provided");
             Assert.Throws<PropertyException>(() => mustFail.Parse("1")); // Wrong type returned by the cloner
         }
     }

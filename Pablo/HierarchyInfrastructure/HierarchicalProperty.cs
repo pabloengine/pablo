@@ -86,6 +86,56 @@ namespace Pablo
         }
 
         /// <summary>
+        /// Gets a value indicating whether this instance is parsable.
+        /// </summary>
+        /// <value><c>true</c> if this instance is parsable; otherwise, <c>false</c>.</value>
+        public bool IsParsable
+        {
+            get {     
+                // The underlying type incase it's nullable
+                var underlyingType = Nullable.GetUnderlyingType(_type);
+                // Has parser method
+                return _parser != null
+                // Is String
+                || _type == typeof(string)
+                // Is primitive 
+                || _type.IsPrimitive
+                // Or Convert understands it
+                || _type == typeof(DateTime)
+                || _type == typeof(DateTimeOffset)
+                // Is Enum
+                || _type.IsEnum
+                // Is Nullable with...
+                || (underlyingType != null
+                // Primitive underlying type
+                && (underlyingType.IsPrimitive
+                // Or underlying type understood by convert
+                || underlyingType == typeof(DateTime)
+                || underlyingType == typeof(DateTimeOffset)));
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is cloneable.
+        /// </summary>
+        /// <value><c>true</c> if this instance is cloneable; otherwise, <c>false</c>.</value>
+        public bool IsCloneable
+        {
+            get {     
+                // Has cloner method
+                return _cloner != null
+                // Is String
+                || _type == typeof(string)
+                // Is value type 
+                || _type.IsValueType
+                // Is Enum
+                || _type.IsEnum
+                // Implements ICloneable
+                || typeof(ICloneable).IsAssignableFrom(_type);
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Pablo.HierarchicalProperty"/> class.
         /// </summary>
         /// <exception cref="T:System.ArgumentNullException">owner, name, type must all have values</exception>
@@ -135,21 +185,28 @@ namespace Pablo
                 if (_type == typeof(string))
                     return s;
 
-                // Parse as enum if the property is enum.
-                if (_type.IsEnum)
-                    return Enum.Parse(_type, s, true);
+                try
+                {
+                    // Parse as enum if the property is enum.
+                    if (_type.IsEnum)
+                        return Enum.Parse(_type, s, true);
 
-                // In case the property is nullable...
-                var nullableType = Nullable.GetUnderlyingType(_type);
-                if (nullableType != null) // Make sure it's nullable.
-                if (nullableType.IsPrimitive || // Make sure its a type that Convert understands.
-                    nullableType == typeof(DateTime) ||
-                    nullableType == typeof(DateTimeOffset))
-                    return Convert.ChangeType(s, nullableType);
+                    // In case the property is nullable...
+                    var nullableType = Nullable.GetUnderlyingType(_type);
+                    if (nullableType != null) // Make sure it's nullable.
+                    if (nullableType.IsPrimitive || // Make sure its a type that Convert understands.
+                        nullableType == typeof(DateTime) ||
+                        nullableType == typeof(DateTimeOffset))
+                        return Convert.ChangeType(s, nullableType);
 
-                // In case the property is primitive, make sure Convert understands it.
-                if (_type.IsPrimitive || _type == typeof(DateTime) || _type == typeof(DateTimeOffset))
-                    return Convert.ChangeType(s, _type);
+                    // In case the property is primitive, make sure Convert understands it.
+                    if (_type.IsPrimitive || _type == typeof(DateTime) || _type == typeof(DateTimeOffset))
+                        return Convert.ChangeType(s, _type);
+                }
+                catch (Exception e)
+                {
+                    throw new PropertyException("Automatic parsing for failed. Provided value: " + s, e, this);
+                }
 
                 // The Property is either a user-defiend struct or a class.
                 throw new PropertyException("A parsing function was not provided.", null, this);
