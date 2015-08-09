@@ -38,6 +38,7 @@
     <Compile Include="HierarchyInfrastructure\CloneException.cs" />
     <Compile Include="HierarchyInfrastructure\HierarchicalProperty.cs" />
     <Compile Include="HierarchyInfrastructure\PropertyException.cs" />
+    <Compile Include="HierarchyInfrastructure\HierarchicalObject.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

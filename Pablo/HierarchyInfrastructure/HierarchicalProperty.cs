@@ -138,7 +138,6 @@ namespace Pablo
         /// <summary>
         /// Initializes a new instance of the <see cref="Pablo.HierarchicalProperty"/> class.
         /// </summary>
-        /// <exception cref="T:System.ArgumentNullException">owner, name, type must all have values</exception>
         internal HierarchicalProperty(Type owner, 
                                       string name, 
                                       Type type, 

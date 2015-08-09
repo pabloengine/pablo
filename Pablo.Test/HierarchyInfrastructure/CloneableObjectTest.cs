@@ -16,7 +16,7 @@ namespace HierarchyInfrastructure
     public class CloneableObjectTest
     {
         [Test(Description = "Must make a new instance of GoodCloneableObject with matching field values.")]
-        public void TestGoodClonable()
+        public void TestGoodCloneable()
         {
             var goodguy = new GoodCloneableObject();
             var goodGuy2 = (GoodCloneableObject)goodguy.Clone();
@@ -24,7 +24,7 @@ namespace HierarchyInfrastructure
         }
 
         [Test(Description = "Must Throw CloneException that holds a reference to our badGuy and hold it's type.")]
-        public void TestBadClonable()
+        public void TestBadCloneable()
         {
             var badGuy = new BadCloneableObject(13);
 
@@ -43,7 +43,7 @@ namespace HierarchyInfrastructure
         }
 
         [Test(Description = "Must Throw CloneException that holds a reference to our theLawyer and hold it's type.")]
-        public void TestliarClonable()
+        public void TestliarCloneable()
         {
             var theLawyer = new LiarCloneableObject(13);
 
@@ -61,6 +61,34 @@ namespace HierarchyInfrastructure
             Assert.Fail("The Exception must be thrown since its an unexpected case!");
         }
 
+        [Test(Description = "Must return a referenceEqual object if read only, and a new object otherwise.")]
+        public void TestReadOnlyCloneable()
+        {
+            var cloneable = new GoodCloneableObject();
+
+            Assert.AreNotSame(cloneable, cloneable.Clone());
+            cloneable.IsReadOnly = true;
+            Assert.AreSame(cloneable, cloneable.Clone());
+        }
+
+        [Test(Description = "Must throw exception if changed while read only.")]
+        public void TestReadOnlyMutationCloneable()
+        {
+            var cloneable = new GoodCloneableObject();
+
+            cloneable.IsReadOnly = true;
+
+            Assert.Throws<InvalidOperationException>(() => {
+                cloneable.IsReadOnly = false;
+            }); // deja-vu...
+
+            // This behavior is defined within the test, it's a simple reminder that this behavior
+            // must be implemented on all Cloneables.
+            Assert.Throws<InvalidOperationException>(() => {
+                cloneable.SomeProperty = 1;
+            });
+        }
+
         #region Mock Implementations
 
         /// <summary>
@@ -68,7 +96,22 @@ namespace HierarchyInfrastructure
         /// </summary>
         class GoodCloneableObject: CloneableObject
         {
-            public int SomeProperty{ get; set; }
+            int _someProperty;
+
+            public int SomeProperty
+            {
+                get
+                {
+                    return _someProperty;
+                }
+                set
+                {
+                    // Check for mutability on every mutating function.
+                    if (IsReadOnly)
+                        throw new InvalidOperationException("Read only objects cannot be mutated.");
+                    _someProperty = value;
+                }
+            }
 
             public GoodCloneableObject()
             {
@@ -89,6 +132,7 @@ namespace HierarchyInfrastructure
         /// </summary>
         class BadCloneableObject: CloneableObject
         {
+            // No mutibility check: silent failure!
             public int SomeProperty{ get; set; }
 
             public BadCloneableObject(int badProperty) // No default constructor + no CreateInstanceOverride override
@@ -108,6 +152,7 @@ namespace HierarchyInfrastructure
         /// </summary>
         class LiarCloneableObject: CloneableObject
         {
+            // No mutibility check: silent failure!
             public int SomeProperty{ get; set; }
 
             public LiarCloneableObject(int badProperty)

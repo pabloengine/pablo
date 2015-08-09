@@ -15,18 +15,44 @@ namespace Pablo
     /// </summary>
     public abstract class CloneableObject : ICloneable
     {
+        bool _isReadOnly;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is read only.
+        /// </summary>
+        /// <remarks>
+        /// Once set it cannot be undone.
+        /// Setting this property causes the clone method to return a shallow
+        /// copy instead.
+        /// </remarks>
+        /// <value><c>true</c> if this instance is read only; otherwise, <c>false</c>.</value>
+        public bool IsReadOnly
+        {
+            get { return _isReadOnly; }
+            set
+            { 
+                if (_isReadOnly)
+                    throw new InvalidOperationException("Read only objects cannot be mutated.");
+                _isReadOnly = value;
+            }
+        }
+
+
         /// <summary>
         /// Makes a deep clone from this object.
         /// </summary>
         /// <remarks>
-        /// Mostly meant for the <see cref="HierarchicalObject"/> to automate property cloning.
-        /// Use this within your code with caution. 
+        /// This function will return this instance if it is read only.
         /// This function will call CreateInstanceOverride to get a new instance.
         /// This function will call CloneOverride to update properties.
         /// </remarks>
         /// <exception cref="CloneException">Cloning failed</exception>
         public CloneableObject Clone()
         {
+            // Immutable objects may be shared safely.
+            if (_isReadOnly)
+                return this;
+
             CloneableObject instance;
 
             try
@@ -77,6 +103,9 @@ namespace Pablo
         /// <summary>
         /// Clone this instance.
         /// </summary>
+        /// <remarks>
+        /// Explicit implmenetation of ICloneable to make the API play nice with others.
+        /// </remarks>
         object ICloneable.Clone()
         {
             return Clone();
