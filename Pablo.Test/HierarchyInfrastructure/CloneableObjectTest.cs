@@ -69,6 +69,11 @@ namespace HierarchyInfrastructure
             Assert.AreNotSame(cloneable, cloneable.Clone());
             cloneable.IsReadOnly = true;
             Assert.AreSame(cloneable, cloneable.Clone());
+            var mutableClone = (GoodCloneableObject)cloneable.MutableClone();
+            Assert.AreNotSame(cloneable, mutableClone);
+            Assert.DoesNotThrow(() => {
+                mutableClone.SomeProperty = 7;
+            });
         }
 
         [Test(Description = "Must throw exception if changed while read only.")]

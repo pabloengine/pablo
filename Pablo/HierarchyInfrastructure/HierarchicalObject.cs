@@ -231,6 +231,18 @@ namespace Pablo
             if (property == null)
                 throw new ArgumentNullException("property");
 
+            // Make sure non-nullable value-types are not assigned null.
+            if (value == null
+                // Make sure the property is value type...
+                && property.Type.IsValueType
+                // And not nullable.
+                && Nullable.GetUnderlyingType(property.Type) == null)
+                throw new ArgumentException("null is not assignable to " + property.Type, "value");
+
+            // It is now okay to assign null to the property. But not value of the wrong type.
+            if (value != null && property.Type.IsInstanceOfType(value))
+                throw new ArgumentException("value is not an instance of " + property.Type, "value");
+
             // Add or update the value for the property.
             _ownValues[property] = value;
         }

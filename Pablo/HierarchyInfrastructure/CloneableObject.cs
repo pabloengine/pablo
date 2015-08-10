@@ -37,9 +37,22 @@ namespace Pablo
             }
         }
 
+        /// <summary>
+        /// Returns a deep, mutable clone of this object.
+        /// </summary>
+        /// <remarks>
+        /// This function will return a clone even if it is read only.
+        /// This function will call CreateInstanceOverride to get a new instance.
+        /// This function will call CloneOverride to update properties.
+        /// </remarks>
+        /// <exception cref="CloneException">Cloning failed</exception>
+        public CloneableObject MutableClone()
+        {
+            return CloneImp();
+        }
 
         /// <summary>
-        /// Makes a deep clone from this object.
+        /// Returns a deep clone of this object.
         /// </summary>
         /// <remarks>
         /// This function will return this instance if it is read only.
@@ -50,9 +63,15 @@ namespace Pablo
         public CloneableObject Clone()
         {
             // Immutable objects may be shared safely.
-            if (_isReadOnly)
-                return this;
+            return _isReadOnly ? this : CloneImp();
+        }
 
+        /// <summary>
+        /// Implementation of <see cref="Clone"/> method.
+        /// </summary>
+        /// <exception cref="CloneException">Cloning failed</exception>
+        CloneableObject CloneImp()
+        {
             CloneableObject instance;
 
             try
