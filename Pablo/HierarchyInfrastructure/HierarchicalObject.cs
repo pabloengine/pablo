@@ -1,4 +1,12 @@
-﻿using System;
+﻿/* 
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ * Copyright (c) 2015, MPL Ali Taheri Moghaddar ali.taheri.m@gmail.com
+ */
+
+using System;
 using System.Collections.Generic;
 
 namespace Pablo
@@ -49,7 +57,7 @@ namespace Pablo
         /// <remarks>
         /// If queried from a root object the object itself is returned.
         /// </remarks>
-        public HierarchicalObject HierarchicalRoot
+        public HierarchicalObject HierarchyRoot
         {
             get
             {
@@ -240,7 +248,7 @@ namespace Pablo
                 throw new ArgumentException("null is not assignable to " + property.Type, "value");
 
             // It is now okay to assign null to the property. But not value of the wrong type.
-            if (value != null && property.Type.IsInstanceOfType(value))
+            if (value != null && !property.Type.IsInstanceOfType(value))
                 throw new ArgumentException("value is not an instance of " + property.Type, "value");
 
             // Add or update the value for the property.

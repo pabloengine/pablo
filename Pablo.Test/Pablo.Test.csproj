@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="HierarchyInfrastructure\CloneableObjectTest.cs" />
     <Compile Include="HierarchyInfrastructure\HierarchicalPropertyTest.cs" />
+    <Compile Include="HierarchyInfrastructure\HierarchicalObjectTest.cs" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
