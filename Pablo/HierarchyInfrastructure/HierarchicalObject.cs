@@ -19,12 +19,14 @@ namespace Pablo
         /// <summary>
         /// A mapping from types to their registered properties.
         /// </summary>
-        static readonly Dictionary<Type, Dictionary<string, HierarchicalProperty>> RegisteredProperties;
+        static readonly Dictionary<Type, Dictionary<string, HierarchicalProperty>> RegisteredProperties
+             = new Dictionary<Type, Dictionary<string, HierarchicalProperty>>();
 
         /// <summary>
         /// A mapping from properties of of this object to it's own values.
         /// </summary>
-        readonly Dictionary<HierarchicalProperty, object> _ownValues;
+        readonly Dictionary<HierarchicalProperty, object> _ownValues
+            = new Dictionary<HierarchicalProperty, object>();
 
         /// <summary>
         /// The hierarchy parent.
@@ -32,8 +34,30 @@ namespace Pablo
         HierarchicalObject _hierarchyParent;
 
         /// <summary>
+        /// Identifies the <see cref="DataContext"/> hierarchical property.
+        /// </summary>
+        public static readonly HierarchicalProperty DataContextProperty =
+            RegisterProperty(typeof(HierarchicalObject), nameof(DataContext), typeof(object), true);
+
+        /// <summary>
+        /// Gets or sets the data context of this object.
+        /// </summary>
+        /// <remarks>
+        /// To allow cloning of this object the data context needs to be 
+        /// intrinsically cloneable or implement the <see cref="ICloneable"/> interface.
+        /// </remarks>
+        public object DataContext
+        {
+            get { return GetValue(DataContextProperty); }
+            set { SetValue(DataContextProperty, value); }
+        }
+
+        /// <summary>
         /// Gets or sets the hierarchy parent.
         /// </summary>
+        /// <remarks>
+        /// To prevent unexpected behavior the clone will not inherit the parent.
+        /// </remarks>
         /// <value>The hierarchy parent.</value>
         /// <exception cref="T:System.InvalidOperationException">object is read only</exception>
         public HierarchicalObject HierarchyParent
@@ -46,7 +70,7 @@ namespace Pablo
             {
                 if (IsReadOnly)
                     throw new InvalidOperationException("Read only objects cannot be mutated.");
-                
+
                 _hierarchyParent = value;
             }
         }
@@ -67,22 +91,6 @@ namespace Pablo
                     current = current.HierarchyParent;
                 return current;
             }
-        }
-
-        /// <summary>
-        /// Initializes the <see cref="Pablo.HierarchicalObject"/> class.
-        /// </summary>
-        static HierarchicalObject()
-        {
-            RegisteredProperties = new Dictionary<Type, Dictionary<string, HierarchicalProperty>>();
-        }
-
-        /// <summary>
-        /// initialize a new instance of HierarchicalObject.
-        /// </summary>
-        protected HierarchicalObject()
-        {
-            _ownValues = new Dictionary<HierarchicalProperty, object>();
         }
 
         /// <summary>
@@ -118,15 +126,15 @@ namespace Pablo
         {
             // Check for nulls.
             if (owner == null)
-                throw new ArgumentNullException("owner");
+                throw new ArgumentNullException(nameof(owner));
             if (name == null)
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             // Make sure the name is valid.
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("name must have value. null or whitespace is not acceptable.", "name");
+                throw new ArgumentException("name must have value. null or whitespace is not acceptable.", nameof(name));
 
             // Add a mapping for the owner if it does not already exist.
             if (!RegisteredProperties.ContainsKey(owner))
@@ -134,7 +142,7 @@ namespace Pablo
 
             // Make sure the name is not already registered.
             if (RegisteredProperties[owner].ContainsKey(name))
-                throw new ArgumentException("A property with the same name as the name provided is already registered.", "name");
+                throw new ArgumentException("A property with the same name as the name provided is already registered.", nameof(name));
 
             // Create a new instance of HierarchicalProperty for this property.
             var hierarchicalProperty = new HierarchicalProperty(owner, name, type, isInheritable, parser, defaultFactory, cloner);
@@ -154,7 +162,7 @@ namespace Pablo
         public static HierarchicalProperty GetProperty(Type owner, string propertyName)
         {
             if (owner == null)
-                throw new ArgumentNullException("owner");
+                throw new ArgumentNullException(nameof(owner));
 
             // Crawl up the class heirarchy to find a base class owning the property.
             var currentType = owner;
@@ -180,7 +188,7 @@ namespace Pablo
         public bool HasOwnValue(HierarchicalProperty property)
         {
             if (property == null)
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
 
             return _ownValues.ContainsKey(property);
         }
@@ -192,7 +200,7 @@ namespace Pablo
         public bool HasValue(HierarchicalProperty property)
         {
             if (property == null)
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
 
             // This object itself has the value.
             return HasOwnValue(property)
@@ -210,14 +218,53 @@ namespace Pablo
         /// Returns the property's default if none exist.
         /// </summary>
         /// <exception cref="ArgumentNullException">property is null</exception>
+        /// <exception cref="BindingExceprtion">expression might have syntax error</exception>
         public object GetValue(HierarchicalProperty property)
         {
             if (property == null)
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
 
             // This object itself has the value.
             if (HasOwnValue(property))
-                return _ownValues[property];
+            {
+                var value = _ownValues[property];
+
+                // Check for binding.
+                var binder = value as Binder;
+
+                // The property is not bound. return the value.
+                if (binder == null)
+                    return value;
+
+                // Apply binding
+                var result = binder.Value;
+
+                // Since binding is done after the context is set
+                // type checking must be done on evaluation.
+                var type = property.Type;
+
+                // If the result of binding is null it means either 
+                // the DataContext is null or the binding expression evaluated to null.
+                // Either way the property must be its type's default.
+                if (result == null)
+                    return type.IsValueType ? Activator.CreateInstance(type) : null;
+
+                // If the result is an instance of the property type return the result
+                if (type.IsInstanceOfType(result))
+                    return result;
+
+                try
+                {
+                    // Otherwise try for conversion.
+                    return Convert.ChangeType(result, type);
+                }
+                catch (Exception)
+                {
+                    throw new BindingTypeMismatchExceprtion(
+                        "The type of the result from evaluating the binding expression does not match the expected type",
+                        null, this, binder.Expression, result.GetType(), type);
+                }
+            }
             // Return the property's default value if inheritance 
             // is not allowed or there are no parents.
             if (!property.IsInheritable || HierarchyParent == null)
@@ -237,7 +284,7 @@ namespace Pablo
                 throw new InvalidOperationException("Read only objects cannot be mutated.");
 
             if (property == null)
-                throw new ArgumentNullException("property");
+                throw new ArgumentNullException(nameof(property));
 
             // Make sure non-nullable value-types are not assigned null.
             if (value == null
@@ -245,14 +292,67 @@ namespace Pablo
                 && property.Type.IsValueType
                 // And not nullable.
                 && Nullable.GetUnderlyingType(property.Type) == null)
-                throw new ArgumentException("null is not assignable to " + property.Type, "value");
+                throw new ArgumentException("null is not assignable to " + property.Type, nameof(value));
 
             // It is now okay to assign null to the property. But not value of the wrong type.
             if (value != null && !property.Type.IsInstanceOfType(value))
-                throw new ArgumentException("value is not an instance of " + property.Type, "value");
+                throw new ArgumentException("value is not an instance of " + property.Type, nameof(value));
 
             // Add or update the value for the property.
             _ownValues[property] = value;
+        }
+
+        /// <summary>
+        /// Bind the property to a path from the <see cref="DataContext"/>
+        /// </summary>
+        /// <param name="property">The property to bind</param>
+        /// <param name="expression"> 
+        /// The expression string.
+        /// The format of the expression must be one of the following:
+        /// <list type="number">
+        ///     <item>
+        ///         <term>"."</term> 
+        ///         <description>
+        ///             The value will be the DataContext itself.
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <term>"Foo"</term> 
+        ///         <description>
+        ///             The value will be from <code>DataContext.Foo</code>. 
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <term>"Foo[5].Bar"</term> 
+        ///         <description>
+        ///             The value will be from <code>DataContext.Foo[5].Bar</code>. 
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///         <term>"Foo.Bar["baz"].ToBaz()"</term> 
+        ///         <description>
+        ///             The value will be from <code>DataContext.Foo.Bar["baz"].ToBaz()</code>. 
+        ///         </description>
+        ///     </item>
+        /// </list>
+        /// </param>
+        /// <exception cref="ArgumentNullException">property or expression is null</exception>
+        /// <exception cref="T:System.InvalidOperationException">object is read only</exception>
+        public void SetBinding(HierarchicalProperty property, string expression)
+        {
+            if (IsReadOnly)
+                throw new InvalidOperationException("Read only objects cannot be mutated.");
+
+            if (property == null)
+                throw new ArgumentNullException(nameof(property));
+
+            if (expression == null)
+                throw new ArgumentNullException(nameof(expression));
+
+            // In case the binding is done on the data context itself change the target to the parent
+            var target = (property == DataContextProperty) ? HierarchyParent : this;
+            // Set the value for the property as a binding.
+            _ownValues[property] = new Binder(target, expression);
         }
 
         /// <summary>

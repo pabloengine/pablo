@@ -16,23 +16,18 @@ namespace Pablo
     /// </summary>
     public sealed class PropertyException : Exception
     {
-        readonly HierarchicalProperty _targetProperty;
-
         /// <summary>
         /// The faulted property.
         /// </summary>
-        public HierarchicalProperty TargetProperty
-        {
-            get { return _targetProperty; }
-        }
+        public HierarchicalProperty TargetProperty { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Pablo.PropertyException"/> class.
+        /// Initializes a new instance of the <see cref="PropertyException"/> class.
         /// </summary>
         internal PropertyException(string message, Exception innerException, HierarchicalProperty targetProperty)
             : base(message, innerException)
         {
-            _targetProperty = targetProperty;
+            TargetProperty = targetProperty;
         }
 
     }

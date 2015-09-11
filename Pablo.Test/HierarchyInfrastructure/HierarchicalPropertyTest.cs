@@ -7,10 +7,10 @@
  */
 
 using System;
+using System.Globalization;
 using NUnit.Framework;
-using Pablo;
 
-namespace HierarchyInfrastructure
+namespace Pablo.Test.HierarchyInfrastructure
 {
     [TestFixture]
     public class HierarchicalPropertyTest
@@ -42,7 +42,8 @@ namespace HierarchyInfrastructure
             Assert.Throws<PropertyException>(() => mustFail.Default.GetType());
 
             // Faulty factory (the factory throws exception)
-            mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(bool), false, null, () => {
+            mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(bool), false, null, () =>
+            {
                 throw null;
             }, null);
             Assert.Throws<PropertyException>(() => mustFail.Default.GetType());
@@ -97,7 +98,8 @@ namespace HierarchyInfrastructure
             goodProperty = new HierarchicalProperty(GetType(), "Foo", typeof(DateTime?), false, null, null, null);
             var now = DateTime.Now;
             Assert.IsTrue(goodProperty.IsParsable, "Is Nullable with an underlying type understood by the Convert");
-            Assert.AreEqual(Convert.ToDateTime(now.ToString()), (DateTime)goodProperty.Parse(now.ToString()));
+            Assert.AreEqual(Convert.ToDateTime(now.ToString(CultureInfo.InvariantCulture)),
+                (DateTime)goodProperty.Parse(now.ToString(CultureInfo.InvariantCulture)));
 
             // Must throw on null
             var mustFail = new HierarchicalProperty(GetType(), "Foo", typeof(object), false, null, null, null);

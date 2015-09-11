@@ -6,11 +6,10 @@
  * Copyright (c) 2015, MPL Ali Taheri Moghaddar ali.taheri.m@gmail.com
  */
 
-using NUnit.Framework;
-using Pablo;
 using System;
+using NUnit.Framework;
 
-namespace HierarchyInfrastructure
+namespace Pablo.Test.HierarchyInfrastructure
 {
     [TestFixture]
     public class CloneableObjectTest
@@ -71,7 +70,8 @@ namespace HierarchyInfrastructure
             Assert.AreSame(cloneable, cloneable.Clone());
             var mutableClone = (GoodCloneableObject)cloneable.MutableClone();
             Assert.AreNotSame(cloneable, mutableClone);
-            Assert.DoesNotThrow(() => {
+            Assert.DoesNotThrow(() =>
+            {
                 mutableClone.SomeProperty = 7;
             });
         }
@@ -79,17 +79,18 @@ namespace HierarchyInfrastructure
         [Test(Description = "Must throw exception if changed while read only.")]
         public void TestReadOnlyMutationCloneable()
         {
-            var cloneable = new GoodCloneableObject();
+            var cloneable = new GoodCloneableObject {IsReadOnly = true};
 
-            cloneable.IsReadOnly = true;
 
-            Assert.Throws<InvalidOperationException>(() => {
+            Assert.Throws<InvalidOperationException>(() =>
+            {
                 cloneable.IsReadOnly = false;
             }); // deja-vu...
 
             // This behavior is defined within the test, it's a simple reminder that this behavior
             // must be implemented on all Cloneables.
-            Assert.Throws<InvalidOperationException>(() => {
+            Assert.Throws<InvalidOperationException>(() =>
+            {
                 cloneable.SomeProperty = 1;
             });
         }
@@ -99,7 +100,7 @@ namespace HierarchyInfrastructure
         /// <summary>
         /// A nicely implemented <see cref="CloneableObject"/>.
         /// </summary>
-        class GoodCloneableObject: CloneableObject
+        class GoodCloneableObject : CloneableObject
         {
             int _someProperty;
 
@@ -127,7 +128,7 @@ namespace HierarchyInfrastructure
             {
                 // It is a good practice to call the parent's CloneOverride in case
                 // some properties must be set there.
-                base.CloneOverride(clonableObject); 
+                base.CloneOverride(clonableObject);
                 ((GoodCloneableObject)clonableObject).SomeProperty = SomeProperty;
             }
         }
@@ -135,10 +136,10 @@ namespace HierarchyInfrastructure
         /// <summary>
         /// A badly implemented <see cref="CloneableObject"/>.
         /// </summary>
-        class BadCloneableObject: CloneableObject
+        class BadCloneableObject : CloneableObject
         {
             // No mutibility check: silent failure!
-            public int SomeProperty{ get; set; }
+            private int SomeProperty { get; }
 
             public BadCloneableObject(int badProperty) // No default constructor + no CreateInstanceOverride override
             {
@@ -155,10 +156,10 @@ namespace HierarchyInfrastructure
         /// <summary>
         /// A liar Implementation of <see cref="CloneableObject"/>.
         /// </summary>
-        class LiarCloneableObject: CloneableObject
+        class LiarCloneableObject : CloneableObject
         {
             // No mutibility check: silent failure!
-            public int SomeProperty{ get; set; }
+            private int SomeProperty { get; }
 
             public LiarCloneableObject(int badProperty)
             {

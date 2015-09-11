@@ -30,7 +30,7 @@ namespace Pablo
         {
             get { return _isReadOnly; }
             set
-            { 
+            {
                 if (_isReadOnly)
                     throw new InvalidOperationException("Read only objects cannot be mutated.");
                 _isReadOnly = value;
