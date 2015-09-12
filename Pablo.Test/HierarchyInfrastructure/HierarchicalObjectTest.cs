@@ -152,6 +152,23 @@ namespace Pablo.Test.HierarchyInfrastructure
             Assert.AreEqual(descendant.DataContext, 33);
         }
 
+        [Test(Description = "The binder must ignore missing properties and throw on syntax errors")]
+        public void LooseBindingTest()
+        {
+            var c = new { Y = new { Z = new[] { 1, 2, 3 } } };
+            var root = new HierarchicalObjectImp { DataContext = c };
+    
+            // This will also ignore syntax errors
+            root.SetBinding(HierarchicalObjectImp.FooProperty, "X'", true);
+            Assert.AreEqual(root.Foo, 0);
+
+            root.SetBinding(HierarchicalObjectImp.FooProperty, "X", true);
+            Assert.AreEqual(root.Foo, 0);
+
+            root.SetBinding(HierarchicalObjectImp.BarProperty, "T", true);
+            Assert.AreEqual(root.Bar, null);
+        }
+
         #region Mock Implementations
 
         /// <summary>

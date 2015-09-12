@@ -336,9 +336,16 @@ namespace Pablo
         ///     </item>
         /// </list>
         /// </param>
+        /// <param name="ignoreOnError">
+        /// Determines whether faulty expressions should
+        /// throw exception or ignore.
+        /// <remarks>
+        /// Caution: Enabling this will also silently ignore syntactic errors.
+        /// </remarks>
+        /// </param>
         /// <exception cref="ArgumentNullException">property or expression is null</exception>
         /// <exception cref="T:System.InvalidOperationException">object is read only</exception>
-        public void SetBinding(HierarchicalProperty property, string expression)
+        public void SetBinding(HierarchicalProperty property, string expression, bool ignoreOnError = false)
         {
             if (IsReadOnly)
                 throw new InvalidOperationException("Read only objects cannot be mutated.");
@@ -352,7 +359,7 @@ namespace Pablo
             // In case the binding is done on the data context itself change the target to the parent
             var target = (property == DataContextProperty) ? HierarchyParent : this;
             // Set the value for the property as a binding.
-            _ownValues[property] = new Binder(target, expression);
+            _ownValues[property] = new Binder(target, expression, ignoreOnError);
         }
 
         /// <summary>

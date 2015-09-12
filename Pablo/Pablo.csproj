@@ -52,10 +52,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Content Include="LICENSE%28ExpressionEvaluator%29.txt" />
-    <Content Include="LICENSE%28Antlr%29.txt" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <Content Include="LICENSE%28DynamicExpresso.Core%29.txt" />
   </ItemGroup>
 </Project>

@@ -8,6 +8,14 @@ namespace Pablo
     /// </summary>
     internal class Binder
     {
+        /// <summary>
+        /// Determines whether faulty expressions should
+        /// throw exception or ignore.
+        /// </summary>
+        private readonly bool _ignoreOnError;
+        /// <summary>
+        /// The target object of binding.
+        /// </summary>
         private readonly HierarchicalObject _target;
 
         /// <summary>
@@ -54,11 +62,16 @@ namespace Pablo
         ///     </item>
         /// </list>
         /// </param>
+        /// <param name="ignoreOnError">
+        /// Determines whether missing properties on the context should
+        /// throw exception or ignore.
+        /// </param>
         /// <exception cref="ArgumentException"> The expression is empty</exception>
         /// <exception cref="ArgumentNullException"> expression is null</exception>
-        public Binder(HierarchicalObject target, string expression)
+        public Binder(HierarchicalObject target, string expression, bool ignoreOnError)
         {
             _target = target;
+            _ignoreOnError = ignoreOnError;
 
             if (expression == null)
                 throw new ArgumentNullException(nameof(expression));
@@ -98,6 +111,8 @@ namespace Pablo
                 }
                 catch (Exception e)
                 {
+                    if (_ignoreOnError)
+                        return null;
                     throw new BindingExceprtion("Evaluation of the bound property failed, see innerException for details.",
                         e, _target, Expression);
                 }
