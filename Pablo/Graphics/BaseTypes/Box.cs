@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 
-namespace Pablo
+namespace Pablo.Graphics
 {
     /// <summary>
     /// Represents a box in a 2 dimensional space.

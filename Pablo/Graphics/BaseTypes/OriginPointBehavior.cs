@@ -6,7 +6,7 @@
  * Copyright (c) 2015, MPL Ali Taheri Moghaddar ali.taheri.m@gmail.com
  */
 
-namespace Pablo
+namespace Pablo.Graphics
 {
     /// <summary>
     /// Specifies the position relative to the geometry space where the render position will reside.

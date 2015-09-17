@@ -9,7 +9,7 @@
 using System;
 using System.Globalization;
 
-namespace Pablo
+namespace Pablo.Graphics
 {
     /// <summary>
     /// Represents a color in rgba space.

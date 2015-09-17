@@ -6,7 +6,7 @@
  * Copyright (c) 2015, MPL Ali Taheri Moghaddar ali.taheri.m@gmail.com
  */
 
-namespace Pablo
+namespace Pablo.Graphics
 {
     /// <summary>
     /// Determines the pattern of a line.

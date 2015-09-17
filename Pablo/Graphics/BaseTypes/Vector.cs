@@ -6,10 +6,10 @@
  * Copyright (c) 2015, MPL Ali Taheri Moghaddar ali.taheri.m@gmail.com
  */
 
-using static System.Math;
+using System;
 using System.Globalization;
 
-namespace Pablo
+namespace Pablo.Graphics
 {
     /// <summary>
     /// Represents a vector in three dimensional space.
@@ -34,7 +34,7 @@ namespace Pablo
         /// <summary>
         /// Gets the Length of the <see cref="Vector"/>.
         /// </summary>
-        public double Length => Sqrt(Pow(X, 2) + Pow(Y, 2) + Pow(Z, 2));
+        public double Length => Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
 
         /// <summary>
         /// Gets the Unit <see cref="Vector"/> from this <see cref="Vector"/>.

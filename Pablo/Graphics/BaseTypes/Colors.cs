@@ -9,7 +9,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Pablo
+namespace Pablo.Graphics
 {
     /// <summary>
     /// Holds a rich set of colors by their common name.

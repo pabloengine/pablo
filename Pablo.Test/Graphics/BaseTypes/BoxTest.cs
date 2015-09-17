@@ -9,6 +9,7 @@
 using System;
 using System.Linq;
 using NUnit.Framework;
+using Pablo.Graphics;
 
 namespace Pablo.Test.Graphics.BaseTypes
 {

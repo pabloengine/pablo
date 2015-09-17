@@ -6,7 +6,7 @@
  * Copyright (c) 2015, MPL Ali Taheri Moghaddar ali.taheri.m@gmail.com
  */
  
-using static Pablo.Colors;
+using static Pablo.Graphics.Colors;
 using NUnit.Framework;
 
 namespace Pablo.Test.Graphics.BaseTypes
