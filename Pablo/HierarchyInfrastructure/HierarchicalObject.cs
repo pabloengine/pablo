@@ -39,7 +39,7 @@ namespace Pablo
         /// Identifies the <see cref="DataContext"/> hierarchical property.
         /// </summary>
         public static readonly HierarchicalProperty DataContextProperty =
-            RegisterProperty(typeof (HierarchicalObject), nameof(DataContext), typeof (object), true);
+            RegisterProperty(typeof(HierarchicalObject), nameof(DataContext), typeof(object), true);
 
         /// <summary>
         /// Gets or sets the data context of this object.
@@ -55,7 +55,7 @@ namespace Pablo
         }
 
         #endregion
-        
+
         /// <summary>
         /// Gets or sets the hierarchy parent.
         /// </summary>
