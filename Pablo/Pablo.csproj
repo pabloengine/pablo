@@ -9,6 +9,8 @@
     <AssemblyName>Pablo</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,13 +33,34 @@
     <DocumentationFile>bin\Release\Pablo.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="cairo-sharp, Version=1.10.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <HintPath>..\packages\GtkSharp.3.1.2\lib\net45\cairo-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DynamicExpresso.Core, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.1.3.1.0\lib\net40\DynamicExpresso.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f, processorArchitecture=MSIL">
+      <HintPath>..\packages\GtkSharp.3.1.2\lib\net45\glib-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f, processorArchitecture=MSIL">
+      <HintPath>..\packages\GtkSharp.3.1.2\lib\net45\pango-sharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Graphics\BaseTypes\Box.cs" />
+    <Compile Include="Graphics\BaseTypes\Color.cs" />
+    <Compile Include="Graphics\BaseTypes\Colors.cs" />
+    <Compile Include="Graphics\BaseTypes\LineJoin.cs" />
+    <Compile Include="Graphics\BaseTypes\OriginPointBehavior.cs" />
+    <Compile Include="Graphics\BaseTypes\Point.cs" />
+    <Compile Include="Graphics\BaseTypes\StrokeType.cs" />
+    <Compile Include="Graphics\BaseTypes\Vector.cs" />
     <Compile Include="HierarchyInfrastructure\Binder.cs" />
     <Compile Include="HierarchyInfrastructure\BindingTypeMismatchExceprtion.cs" />
     <Compile Include="HierarchyInfrastructure\BindingExceprtion.cs" />
@@ -54,7 +77,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="LICENSE%28DynamicExpresso.Core%29.txt" />
-  </ItemGroup>
+  <Import Project="..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets" Condition="Exists('..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets'))" />
+  </Target>
 </Project>

@@ -46,31 +46,28 @@ namespace Pablo
         /// This function will call CloneOverride to update properties.
         /// </remarks>
         /// <exception cref="CloneException">Cloning failed</exception>
-        public CloneableObject MutableClone()
-        {
-            return CloneImp();
-        }
+        public CloneableObject MutableClone() => CloneImpl();
 
         /// <summary>
         /// Returns a deep clone of this object.
         /// </summary>
         /// <remarks>
         /// This function will return this instance if it is read only.
-        /// This function will call CreateInstanceOverride to get a new instance.
-        /// This function will call CloneOverride to update properties.
+        /// This function will call CreateInstanceOverride to get a new instance if not read only.
+        /// This function will call CloneOverride to update properties if not read only.
         /// </remarks>
         /// <exception cref="CloneException">Cloning failed</exception>
         public CloneableObject Clone()
         {
             // Immutable objects may be shared safely.
-            return _isReadOnly ? this : CloneImp();
+            return _isReadOnly ? this : CloneImpl();
         }
 
         /// <summary>
         /// Implementation of <see cref="Clone"/> method.
         /// </summary>
         /// <exception cref="CloneException">Cloning failed</exception>
-        CloneableObject CloneImp()
+        private CloneableObject CloneImpl()
         {
             CloneableObject instance;
 
@@ -106,16 +103,16 @@ namespace Pablo
         /// Create instance of the current type. Override when a default constructor is not present.
         /// </summary>
         protected virtual CloneableObject CreateInstanceOverride()
-        {
-            return (CloneableObject)Activator.CreateInstance(GetType());
-        }
+            => (CloneableObject)Activator.CreateInstance(GetType());
 
         /// <summary>
         /// Implement semantics that cannot be specified while creating an instance of the object.
         /// </summary>
-        protected virtual void CloneOverride(CloneableObject clonableObject)
-        {
-        }
+        /// <remarks>
+        /// This function is not called when cloning read only objects.
+        /// </remarks>
+        protected virtual void CloneOverride(CloneableObject clone)
+        { }
 
         #region Implementation of ICloneable
 
@@ -125,10 +122,7 @@ namespace Pablo
         /// <remarks>
         /// Explicit implmenetation of ICloneable to make the API play nice with others.
         /// </remarks>
-        object ICloneable.Clone()
-        {
-            return Clone();
-        }
+        object ICloneable.Clone() => Clone();
 
         #endregion
 

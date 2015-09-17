@@ -29,7 +29,7 @@ namespace Pablo
         public string Expression { get; }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Binder"/>
+        /// Initializes a new instance of <see cref="Binder"/>.
         /// </summary>
         /// <param name="target"> The target object</param>
         /// <param name="expression"> 
@@ -55,7 +55,7 @@ namespace Pablo
         ///         </description>
         ///     </item>
         ///     <item>
-        ///         <term>"Foo.Bar["baz"].ToBaz()"</term> 
+        ///         <term>"Foo.Bar[\"baz\"].ToBaz()"</term> 
         ///         <description>
         ///             The value will be from <code>DataContext.Foo.Bar["baz"].ToBaz()</code>. 
         ///         </description>
@@ -96,6 +96,7 @@ namespace Pablo
         /// <summary>
         /// Gets the value from the evaluated binding expression.
         /// </summary>
+        /// <exception cref="BindingExceprtion">Syntax error or missing property</exception>
         public object Value
         {
             get

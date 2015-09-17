@@ -82,20 +82,20 @@ namespace Pablo
                 var underlyingType = Nullable.GetUnderlyingType(Type);
                 // Has parser method
                 return _parser != null
-                    // Is String
+                // Is String
                 || Type == typeof(string)
-                    // Is primitive 
+                // Is primitive 
                 || Type.IsPrimitive
-                    // Or Convert understands it
+                // Or Convert understands it
                 || Type == typeof(DateTime)
                 || Type == typeof(DateTimeOffset)
-                    // Is Enum
+                // Is Enum
                 || Type.IsEnum
-                    // Is Nullable with...
+                // Is Nullable with...
                 || (underlyingType != null
-                    // Primitive underlying type
+                // Primitive underlying type
                 && (underlyingType.IsPrimitive
-                    // Or underlying type understood by convert
+                // Or underlying type understood by convert
                 || underlyingType == typeof(DateTime)
                 || underlyingType == typeof(DateTimeOffset)));
             }
@@ -106,14 +106,14 @@ namespace Pablo
         /// </summary>
         /// <value><c>true</c> if this instance is cloneable; otherwise, <c>false</c>.</value>
         public bool IsCloneable => _cloner != null
-            // Is String
-                                   || Type == typeof (string)
-            // Is value type 
+                                   // Is String
+                                   || Type == typeof(string)
+                                   // Is value type 
                                    || Type.IsValueType
-            // Is Enum
+                                   // Is Enum
                                    || Type.IsEnum
-            // Implements ICloneable
-                                   || typeof (ICloneable).IsAssignableFrom(Type);
+                                   // Implements ICloneable
+                                   || typeof(ICloneable).IsAssignableFrom(Type);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Pablo.HierarchicalProperty"/> class.
@@ -184,7 +184,7 @@ namespace Pablo
                 }
                 catch (Exception e)
                 {
-                    throw new PropertyException("Automatic parsing for failed. Provided value: " + s, e, this);
+                    throw new PropertyException("Automatic parsing failed for the provided value: " + s, e, this);
                 }
 
                 // The Property is either a user-defiend struct or a class.

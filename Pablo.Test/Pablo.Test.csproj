@@ -38,6 +38,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="Graphics\BaseTypes\BoxTest.cs" />
+    <Compile Include="Graphics\BaseTypes\ColorsTest.cs" />
+    <Compile Include="Graphics\BaseTypes\ColorTest.cs" />
+    <Compile Include="Graphics\BaseTypes\VectorTest.cs" />
+    <Compile Include="Graphics\BaseTypes\PointTest.cs" />
     <Compile Include="HierarchyInfrastructure\CloneableObjectTest.cs" />
     <Compile Include="HierarchyInfrastructure\HierarchicalPropertyTest.cs" />
     <Compile Include="HierarchyInfrastructure\HierarchicalObjectTest.cs" />
@@ -59,8 +64,5 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="LICENSE%28NUnit%29.txt" />
   </ItemGroup>
 </Project>

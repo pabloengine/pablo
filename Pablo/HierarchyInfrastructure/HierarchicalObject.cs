@@ -19,25 +19,27 @@ namespace Pablo
         /// <summary>
         /// A mapping from types to their registered properties.
         /// </summary>
-        static readonly Dictionary<Type, Dictionary<string, HierarchicalProperty>> RegisteredProperties
+        private static readonly Dictionary<Type, Dictionary<string, HierarchicalProperty>> RegisteredProperties
              = new Dictionary<Type, Dictionary<string, HierarchicalProperty>>();
 
         /// <summary>
         /// A mapping from properties of of this object to it's own values.
         /// </summary>
-        readonly Dictionary<HierarchicalProperty, object> _ownValues
+        private readonly Dictionary<HierarchicalProperty, object> _ownValues
             = new Dictionary<HierarchicalProperty, object>();
 
         /// <summary>
         /// The hierarchy parent.
         /// </summary>
-        HierarchicalObject _hierarchyParent;
+        private HierarchicalObject _hierarchyParent;
+
+        #region DataContext
 
         /// <summary>
         /// Identifies the <see cref="DataContext"/> hierarchical property.
         /// </summary>
         public static readonly HierarchicalProperty DataContextProperty =
-            RegisterProperty(typeof(HierarchicalObject), nameof(DataContext), typeof(object), true);
+            RegisterProperty(typeof (HierarchicalObject), nameof(DataContext), typeof (object), true);
 
         /// <summary>
         /// Gets or sets the data context of this object.
@@ -52,11 +54,13 @@ namespace Pablo
             set { SetValue(DataContextProperty, value); }
         }
 
+        #endregion
+        
         /// <summary>
         /// Gets or sets the hierarchy parent.
         /// </summary>
         /// <remarks>
-        /// To prevent unexpected behavior the clone will not inherit the parent.
+        /// parent is always shallow cloned. 
         /// </remarks>
         /// <value>The hierarchy parent.</value>
         /// <exception cref="T:System.InvalidOperationException">object is read only</exception>
@@ -367,12 +371,16 @@ namespace Pablo
         /// </summary>
         /// <remarks>
         /// This function cannot be overriden from this point on or the contract of this
-        /// class will be broken. To support cloning all properties must be properly registered.
+        /// class will break. To support cloning all properties must be properly registered.
         /// </remarks>
-        /// <param name="clonableObject">Clonable object.</param>
-        protected sealed override void CloneOverride(CloneableObject clonableObject)
+        /// <param name="clone">Clonable object.</param>
+        protected sealed override void CloneOverride(CloneableObject clone)
         {
-            var clone = (HierarchicalObject)clonableObject;
+            var instance = (HierarchicalObject)clone;
+
+            // Shallowly copy the parent.
+            instance._hierarchyParent = _hierarchyParent;
+
             foreach (var propertyMapping in _ownValues)
             {
                 // The property representative.
@@ -380,7 +388,7 @@ namespace Pablo
                 // The value owned by this object.
                 var value = propertyMapping.Value;
                 // Set value for this property on the clone.
-                clone.SetValue(property, property.Clone(value));
+                instance.SetValue(property, property.Clone(value));
             }
         }
     }

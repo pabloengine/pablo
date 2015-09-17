@@ -13,7 +13,7 @@ namespace Pablo
         public HierarchicalObject Target { get; }
 
         /// <summary>
-        /// The faulty expression that failed to compile
+        /// The faulty expression that failed to compile.
         /// </summary>
         public string Expression { get; }
 
