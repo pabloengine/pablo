@@ -32,7 +32,7 @@ namespace Pablo.Test.Graphics.Geometry
                 FontHeight = 5,
                 Rotation = 90,
             };
-            var e = text.BoundingBox;
+
             var writer = new StringWriter();
             _serializer.Serialize(writer, text);
             var reader = new StringReader(writer.ToString());
