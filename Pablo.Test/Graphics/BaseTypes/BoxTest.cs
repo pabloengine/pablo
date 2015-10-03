@@ -65,5 +65,21 @@ namespace Pablo.Test.Graphics.BaseTypes
             Assert.Throws<ArgumentException>(() => new Box(new Point(0, 0), new Point(-1, -1)));
             Assert.Throws<ArgumentException>(() => new Box(new Point(0, 1), new Point(1, 0)));
         }
+
+        [Test(Description = "The encompass method must behave correctly")]
+        public void TestEncompass()
+        {
+            var points = new[] {new Point(1, 1), new Point(2, 4), new Point(3, 3), new Point(2, 0), new Point(2, -1),};
+            var resultingBox = new Box(1,4,3,-1);
+            Assert.AreEqual(resultingBox, Box.Encompass(points));
+
+            var point = new Point(5,6);
+            resultingBox = new Box(5,6,5,6);
+            Assert.AreEqual(resultingBox, Box.Encompass(point));
+
+            Assert.Throws<ArgumentNullException>(() => Box.Encompass(null));
+
+            Assert.Throws<ArgumentException>(() => Box.Encompass());
+        }
     }
 }

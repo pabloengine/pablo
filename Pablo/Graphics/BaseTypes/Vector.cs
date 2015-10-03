@@ -8,14 +8,30 @@
 
 using System;
 using System.Globalization;
+using static System.Math;
 
 namespace Pablo.Graphics
 {
     /// <summary>
     /// Represents a vector in three dimensional space.
     /// </summary>
-    public struct Vector
+    public struct Vector : IEquatable<Vector>
     {
+        /// <summary>
+        /// The unit <see cref="Vector"/> along the x axis.
+        /// </summary>
+        public static readonly Vector I = new Vector(1, 0, 0);
+
+        /// <summary>
+        /// The unit <see cref="Vector"/> along the y axis.
+        /// </summary>
+        public static readonly Vector J = new Vector(0, 1, 0);
+
+        /// <summary>
+        /// The unit <see cref="Vector"/> along the z axis.
+        /// </summary>
+        public static readonly Vector K = new Vector(0, 0, 1);
+
         /// <summary>
         /// Gets the X value of the <see cref="Vector"/>.
         /// </summary>
@@ -34,7 +50,7 @@ namespace Pablo.Graphics
         /// <summary>
         /// Gets the Length of the <see cref="Vector"/>.
         /// </summary>
-        public double Length => Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
+        public double Length => Sqrt(Pow(X, 2) + Pow(Y, 2) + Pow(Z, 2));
 
         /// <summary>
         /// Gets the Unit <see cref="Vector"/> from this <see cref="Vector"/>.
@@ -89,6 +105,34 @@ namespace Pablo.Graphics
         /// </summary>
         public static Vector Cross(Vector a, Vector b)
             => new Vector(a.Y * b.Z - a.Z * b.Y, a.Z * b.X - a.X * b.Z, a.X * b.Y - a.Y * b.X);
+
+        /// <summary>
+        /// Returns the rotated <see cref="Vector"/> of the provided
+        /// <see cref="Vector"/> counterclockwise around the z axis by the provided angle in degrees.
+        /// </summary>
+        public static Vector RotateZDegree(Vector v, double deg)
+            => RotateZRadian(v, deg * (PI / 180.0));
+
+        /// <summary>
+        /// Returns the rotated <see cref="Vector"/> of the provided
+        /// <see cref="Vector"/> counterclockwise around the z axis by the provided angle in radian.
+        /// </summary>
+        public static Vector RotateZRadian(Vector v, double rad)
+            => new Vector(v.X * Cos(rad) - v.Y * Sin(rad), v.X * Sin(rad) + v.Y * Cos(rad), v.Z);
+
+        // TODO: Add rotation for x and y axes too.
+
+        /// <summary>
+        /// Determines whether the two provided <see cref="Vector"/>s 
+        /// are alteast as close as epsilon.
+        /// </summary>
+        /// <remarks>
+        /// If the epsilon is left out, the default will be 1E-10.
+        /// </remarks>
+        public static bool Near(Vector a, Vector b, double epsilon = 1E-10)
+        {
+            return (a - b).Length < 1E-10;
+        }
 
         /// <summary>
         /// Compares two <see cref="Vector"/>s for equality.
@@ -176,6 +220,8 @@ namespace Pablo.Graphics
         /// <param name="obj">The object to compare with the current object. </param><filterpriority>2</filterpriority>
         public override bool Equals(object obj) => obj is Vector && this == (Vector)obj;
 
+        #region Implementation of IEquatable<Vector>
+
         /// <summary>
         /// Determines whether the specified <see cref="Vector"/> is equal to the current <see cref="Vector"/>.
         /// </summary>
@@ -185,12 +231,53 @@ namespace Pablo.Graphics
         /// <param name="other">The <see cref="Vector"/> to compare with the current <see cref="Vector"/>. </param>
         public bool Equals(Vector other) => this == other;
 
+        #endregion
+
         /// <summary>
-        /// Returns a string that represents the current object.
+        /// Converts the string representation of <see cref="Vector"/> into its logical representation.
         /// </summary>
-        /// <returns>
-        /// A string that represents the current object.
-        /// </returns>
+        /// <param name="s">
+        /// The format of the input string must be: "x,y,z" where x, y and z are double precision 
+        /// floating point numbers parsable with <code>double.Parse(s)</code>
+        /// </param>
+        /// <exception cref="ArgumentNullException">s is null</exception>
+        /// <exception cref="FormatException">input string is in not in the correct format</exception>
+        public static Vector Parse(string s)
+        {
+            if (s == null)
+                throw new ArgumentNullException(nameof(s));
+
+            try
+            {
+                return ParseImpl(s);
+            }
+            catch (Exception e)
+            {
+                throw new FormatException($"The input string ( {s} ) was not in a valid format.", e);
+            }
+        }
+
+        /// <summary>
+        /// Implementation of the <see cref="Parse"/> method.
+        /// </summary>
+        private static Vector ParseImpl(string s)
+        {
+            var strings = s.Split(',');
+            var x = double.Parse(strings[0]);
+            var y = double.Parse(strings[1]);
+            var z = double.Parse(strings[2]);
+            return new Vector(x, y, z);
+        }
+
+        /// <summary>
+        /// Represents the <see cref="Vector"/> as a <see cref="string"/>. This function is 
+        /// guarateed to stay consistent and it is safe to use for serialization.
+        /// </summary>
+        /// <remarks>
+        /// The opposite behavior of Parse with the same output format as the input format.
+        /// "X,Y,Z" The numbers are serialized using 
+        /// <code>double.ToString(CultureInfo.InvariantCulture)</code>
+        /// </remarks>
         public override string ToString()
         {
             return X.ToString(CultureInfo.InvariantCulture) + "," +

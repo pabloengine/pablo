@@ -14,13 +14,14 @@ namespace Pablo
     /// <summary>
     /// Represents a value that is bound.
     /// </summary>
-    internal class Binder
+    internal sealed class Binder
     {
         /// <summary>
         /// Determines whether faulty expressions should
         /// throw exception or ignore.
         /// </summary>
         private readonly bool _ignoreOnError;
+
         /// <summary>
         /// The target object of binding.
         /// </summary>

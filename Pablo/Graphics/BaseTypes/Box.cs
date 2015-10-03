@@ -9,13 +9,14 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 
 namespace Pablo.Graphics
 {
     /// <summary>
     /// Represents a box in a 2 dimensional space.
     /// </summary>
-    public struct Box
+    public struct Box : IEquatable<Box>
     {
         /// <summary>
         /// Gets the Left side of the <see cref="Box"/>.
@@ -163,6 +164,8 @@ namespace Pablo.Graphics
         /// <param name="obj">The object to compare with the current object. </param>
         public override bool Equals(object obj) => obj is Box && this == (Box)obj;
 
+        #region Implementation of IEquatable<Box>
+
         /// <summary>
         /// Determines whether the specified <see cref="Box"/> is equal to the current <see cref="Box"/>.
         /// </summary>
@@ -171,6 +174,8 @@ namespace Pablo.Graphics
         /// </returns>
         /// <param name="other">The <see cref="Box"/> to compare with the current <see cref="Box"/>. </param>
         public bool Equals(Box other) => this == other;
+
+        #endregion
 
         /// <summary>
         /// Creates a square <see cref="Box"/> at the origin.
@@ -227,6 +232,42 @@ namespace Pablo.Graphics
             var right = double.Parse(strings[2]);
             var bottom = double.Parse(strings[3]);
             return new Box(left, top, right, bottom);
+        }
+
+        /// <summary>
+        /// Constructs a <see cref="Box"/> that surrounds the provided <see cref="Point"/>s.
+        /// </summary>
+        /// <param name="points">The <see cref="Point"/>s to encompass a <see cref="Box"/> around.</param>
+        /// <exception cref="ArgumentNullException">points is null</exception>
+        /// <returns>The <see cref="Box"/> encompassing all the provided <see cref="Point"/>s</returns>
+        public static Box Encompass(IEnumerable<Point> points)
+        {
+            if(points == null)
+                throw new ArgumentNullException(nameof(points));
+
+            // Conver to array to avoid multiple enumeration.
+            var pointsArray = points as Point[] ?? points.ToArray();
+            
+            // Must have atleast one point.
+            if(pointsArray.Length < 1)
+                throw new ArgumentException("Cannot encompass zero points.", nameof(points));
+
+            return new Box(
+                    pointsArray.Select(p => p.X).Min(),
+                    pointsArray.Select(p => p.Y).Max(),
+                    pointsArray.Select(p => p.X).Max(),
+                    pointsArray.Select(p => p.Y).Min());
+        }
+
+        /// <summary>
+        /// Constructs a <see cref="Box"/> that surrounds the provided <see cref="Point"/>s.
+        /// </summary>
+        /// <param name="points">The <see cref="Point"/>s to encompass a <see cref="Box"/> around.</param>
+        /// <exception cref="ArgumentNullException">points is null</exception>
+        /// <returns>The <see cref="Box"/> encompassing all the provided <see cref="Point"/>s</returns>
+        public static Box Encompass(params Point[] points)
+        {
+            return Encompass(points.AsEnumerable());
         }
 
         /// <summary>

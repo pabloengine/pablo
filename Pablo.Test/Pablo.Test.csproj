@@ -35,6 +35,7 @@
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -43,6 +44,13 @@
     <Compile Include="Graphics\BaseTypes\ColorTest.cs" />
     <Compile Include="Graphics\BaseTypes\VectorTest.cs" />
     <Compile Include="Graphics\BaseTypes\PointTest.cs" />
+    <Compile Include="Graphics\Geometry\GeometryGroupTest.cs" />
+    <Compile Include="Graphics\Geometry\TextGeometryTest.cs" />
+    <Compile Include="Graphics\Geometry\PolygonGeometryTest.cs" />
+    <Compile Include="Graphics\Geometry\PolylineGeometryTest.cs" />
+    <Compile Include="Graphics\Geometry\LineGeometryTest.cs" />
+    <Compile Include="Graphics\Geometry\EllipseGeometryTest.cs" />
+    <Compile Include="Graphics\Geometry\CurveGeometryTest.cs" />
     <Compile Include="HierarchyInfrastructure\CloneableObjectTest.cs" />
     <Compile Include="HierarchyInfrastructure\HierarchicalPropertyTest.cs" />
     <Compile Include="HierarchyInfrastructure\HierarchicalObjectTest.cs" />

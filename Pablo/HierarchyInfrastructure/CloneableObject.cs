@@ -7,6 +7,7 @@
  */
 
 using System;
+using System.Xml.Serialization;
 
 namespace Pablo
 {
@@ -26,24 +27,80 @@ namespace Pablo
         /// copy instead.
         /// </remarks>
         /// <value><c>true</c> if this instance is read only; otherwise, <c>false</c>.</value>
+        [XmlIgnore]
         public bool IsReadOnly
         {
             get { return _isReadOnly; }
             set
             {
-                if (_isReadOnly)
-                    throw new InvalidOperationException("Read only objects cannot be mutated.");
+                ThrowOnReadOnly();
                 _isReadOnly = value;
             }
         }
 
         /// <summary>
+        /// This function should be used inside every mutator to ensure 
+        /// the mutable invariant.
+        /// </summary>
+        protected void ThrowOnReadOnly()
+        {
+            if (_isReadOnly)
+                throw new InvalidOperationException("Read only objects cannot be mutated.");
+        }
+
+
+        /// <summary>
+        /// Serves as the default hash function. 
+        /// </summary>
+        /// <remarks>
+        /// All children
+        /// </remarks>
+        /// <returns>
+        /// A hash code for the current object.
+        /// </returns>
+        public sealed override int GetHashCode()
+        {
+            // Make sure no object is used inside a hashset 
+            // unless it's immutable.
+            if(!IsReadOnly)
+                throw new InvalidOperationException($"{nameof(GetHashCode)} must be invoked on mutable objects.");
+
+            return GetHashCodeOverride();
+        }
+
+        /// <summary>
+        /// This function must be overriden instead of <see cref="GetHashCode"/>. 
+        /// </summary>
+        /// <remarks>
+        /// <see cref="GetHashCode"/> must not be invoked on mutable objects.
+        /// </remarks>
+        protected virtual int GetHashCodeOverride() => base.GetHashCode();
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <returns>
+        /// true if the specified object is equal to the current object; otherwise, false.
+        /// </returns>
+        /// <param name="obj">The object to compare with the current object. </param><filterpriority>2</filterpriority>
+        public sealed override bool Equals(object obj) => ReferenceEquals(this, obj) || EqualsOverride(obj);
+
+        /// <summary>
+        /// This function must be overriden instead of <see cref="Equals"/>. 
+        /// </summary>
+        /// <returns>
+        /// true if the specified object is equal to the current object; otherwise, false.
+        /// </returns>
+        /// <param name="obj">The object to compare with the current object. </param><filterpriority>2</filterpriority>
+        protected virtual bool EqualsOverride(object obj) => ReferenceEquals(this, obj);
+
+        /// <summary>
         /// Returns a deep, mutable clone of this object.
         /// </summary>
         /// <remarks>
-        /// This function will return a clone even if it is read only.
-        /// This function will call CreateInstanceOverride to get a new instance.
-        /// This function will call CloneOverride to update properties.
+        /// <para>This function will return a clone even if it is read only.</para>
+        /// <para>This function will call CreateInstanceOverride to get a new instance.</para>
+        /// <para>This function will call CloneOverride to update properties.</para>
         /// </remarks>
         /// <exception cref="CloneException">Cloning failed</exception>
         public CloneableObject MutableClone() => CloneImpl();
@@ -52,9 +109,9 @@ namespace Pablo
         /// Returns a deep clone of this object.
         /// </summary>
         /// <remarks>
-        /// This function will return this instance if it is read only.
-        /// This function will call CreateInstanceOverride to get a new instance if not read only.
-        /// This function will call CloneOverride to update properties if not read only.
+        /// <para>This function will return this instance if it is read only.</para>
+        /// <para>This function will call CreateInstanceOverride to get a new instance if not read only.</para>
+        /// <para>This function will call CloneOverride to update properties if not read only.</para>
         /// </remarks>
         /// <exception cref="CloneException">Cloning failed</exception>
         public CloneableObject Clone()

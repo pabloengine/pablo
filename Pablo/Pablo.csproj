@@ -23,6 +23,7 @@
     <ConsolePause>false</ConsolePause>
     <DocumentationFile>
     </DocumentationFile>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>true</Optimize>
@@ -31,36 +32,38 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <DocumentationFile>bin\Release\Pablo.xml</DocumentationFile>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="cairo-sharp, Version=1.10.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\GtkSharp.3.1.2\lib\net45\cairo-sharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="DynamicExpresso.Core, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicExpresso.Core.1.3.1.0\lib\net40\DynamicExpresso.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="glib-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f, processorArchitecture=MSIL">
-      <HintPath>..\packages\GtkSharp.3.1.2\lib\net45\glib-sharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="pango-sharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f, processorArchitecture=MSIL">
-      <HintPath>..\packages\GtkSharp.3.1.2\lib\net45\pango-sharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graphics\BaseTypes\Box.cs" />
     <Compile Include="Graphics\BaseTypes\Color.cs" />
     <Compile Include="Graphics\BaseTypes\Colors.cs" />
+    <Compile Include="Graphics\Geometry\PolygonGeometry.cs" />
+    <Compile Include="Graphics\BaseTypes\FontDecoration.cs" />
+    <Compile Include="Graphics\BaseTypes\FontStyle.cs" />
+    <Compile Include="Graphics\BaseTypes\FontWeight.cs" />
     <Compile Include="Graphics\BaseTypes\LineJoin.cs" />
-    <Compile Include="Graphics\BaseTypes\OriginPointBehavior.cs" />
     <Compile Include="Graphics\BaseTypes\Point.cs" />
     <Compile Include="Graphics\BaseTypes\StrokeType.cs" />
     <Compile Include="Graphics\BaseTypes\Vector.cs" />
+    <Compile Include="Graphics\Geometry\CurveGeometry.cs" />
+    <Compile Include="Graphics\Geometry\EllipseGeometry.cs" />
+    <Compile Include="Graphics\Geometry\Geometry.cs" />
+    <Compile Include="Graphics\Geometry\GeometryGroup.cs" />
+    <Compile Include="Graphics\Geometry\LineGeometry.cs" />
+    <Compile Include="Graphics\Geometry\PolylineGeometry.cs" />
+    <Compile Include="Graphics\Geometry\TextGeometry.cs" />
+    <Compile Include="Graphics\TextUtils\ITextLayoutMeasure.cs" />
+    <Compile Include="Graphics\TextUtils\DefaultTextLayoutMeasure.cs" />
     <Compile Include="HierarchyInfrastructure\Binder.cs" />
     <Compile Include="HierarchyInfrastructure\BindingTypeMismatchExceprtion.cs" />
     <Compile Include="HierarchyInfrastructure\BindingExceprtion.cs" />

@@ -72,9 +72,7 @@ namespace Pablo
             }
             set
             {
-                if (IsReadOnly)
-                    throw new InvalidOperationException("Read only objects cannot be mutated.");
-
+                ThrowOnReadOnly();
                 _hierarchyParent = value;
             }
         }
@@ -284,8 +282,7 @@ namespace Pablo
         /// <exception cref="T:System.InvalidOperationException">object is read only</exception>
         public void SetValue(HierarchicalProperty property, object value)
         {
-            if (IsReadOnly)
-                throw new InvalidOperationException("Read only objects cannot be mutated.");
+            ThrowOnReadOnly();
 
             if (property == null)
                 throw new ArgumentNullException(nameof(property));
@@ -351,8 +348,7 @@ namespace Pablo
         /// <exception cref="T:System.InvalidOperationException">object is read only</exception>
         public void SetBinding(HierarchicalProperty property, string expression, bool ignoreOnError = false)
         {
-            if (IsReadOnly)
-                throw new InvalidOperationException("Read only objects cannot be mutated.");
+            ThrowOnReadOnly();
 
             if (property == null)
                 throw new ArgumentNullException(nameof(property));

@@ -14,7 +14,7 @@ namespace Pablo.Graphics
     /// <summary>
     /// Represents a color in rgba space.
     /// </summary>
-    public struct Color
+    public struct Color : IEquatable<Color>
     {
         /// <summary>
         /// Gets the red value of the <see cref="Color"/>.
@@ -102,6 +102,8 @@ namespace Pablo.Graphics
         /// <param name="obj">The object to compare with the current object. </param>
         public override bool Equals(object obj) => obj is Color && this == (Color)obj;
 
+        #region Implementation of IEquatable<Color>
+
         /// <summary>
         /// Determines whether the specified <see cref="Color"/> is equal to the current <see cref="Color"/>.
         /// </summary>
@@ -110,6 +112,8 @@ namespace Pablo.Graphics
         /// </returns>
         /// <param name="other">The <see cref="Color"/> to compare with the current <see cref="Color"/>. </param>
         public bool Equals(Color other) => this == other;
+
+        #endregion
 
         /// <summary>
         /// Converts the string representation of <see cref="Color"/> into its logical representation.

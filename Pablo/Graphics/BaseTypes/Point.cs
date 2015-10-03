@@ -14,7 +14,7 @@ namespace Pablo.Graphics
     /// <summary>
     /// Represents a point in two dimensional space.
     /// </summary>
-    public struct Point
+    public struct Point : IEquatable<Point>
     {
         /// <summary>
         /// Gets or sets the X value of the <see cref="Point"/>.
@@ -84,6 +84,8 @@ namespace Pablo.Graphics
         /// <param name="obj">The object to compare with the current object. </param><filterpriority>2</filterpriority>
         public override bool Equals(object obj) => obj is Point && this == (Point)obj;
 
+        #region Implementation of IEquatable<Point>
+
         /// <summary>
         /// Determines whether the specified <see cref="Point"/> is equal to the current <see cref="Point"/>.
         /// </summary>
@@ -93,8 +95,10 @@ namespace Pablo.Graphics
         /// <param name="other">The <see cref="Point"/> to compare with the current <see cref="Point"/>. </param>
         public bool Equals(Point other) => this == other;
 
+        #endregion
+
         /// <summary>
-        /// Converts the string representation of <see cref="Box"/> into its logical representation.
+        /// Converts the string representation of <see cref="Point"/> into its logical representation.
         /// </summary>
         /// <param name="s">
         /// The format of the input string must be: "x,y" where x and y are 
@@ -120,7 +124,7 @@ namespace Pablo.Graphics
         /// <summary>
         /// Implementation of the <see cref="Parse"/> method.
         /// </summary>
-        public static Point ParseImpl(string s)
+        private static Point ParseImpl(string s)
         {
             var strings = s.Split(',');
             var x = double.Parse(strings[0]);
