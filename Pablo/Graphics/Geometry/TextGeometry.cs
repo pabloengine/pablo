@@ -20,6 +20,12 @@ namespace Pablo.Graphics
     public sealed class TextGeometry : Geometry, IEquatable<TextGeometry>, IXmlSerializable
     {
         /// <summary>
+        /// The default <see cref="ITextLayoutMeasure"/> instance to use 
+        /// when creating new instances of the <see cref="TextGeometry"/>.
+        /// </summary>
+        public static ITextLayoutMeasure DefaultTextLayoutMeasure = Graphics.DefaultTextLayoutMeasure.Instance;
+
+        /// <summary>
         /// The font family of the <see cref="TextGeometry"/>.
         /// </summary>
         private string _fontFamily;
@@ -255,7 +261,7 @@ namespace Pablo.Graphics
         /// </summary>
         public TextGeometry()
         {
-            _layoutMeasure = DefaultTextLayoutMeasure.Instance;
+            _layoutMeasure = DefaultTextLayoutMeasure ?? Graphics.DefaultTextLayoutMeasure.Instance;
         }
 
         /// <summary>

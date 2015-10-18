@@ -23,7 +23,7 @@ namespace Pablo.Graphics
         /// <summary>
         /// The <see cref="Geometry"/> array of the <see cref="GeometryGroup"/>.
         /// </summary>
-        private Geometry[] _geometries = { };
+        private Geometry[] _geometries = Array.Empty<Geometry>();
 
         /// <summary>
         /// Gets or sets the <see cref="Geometry"/> array of the <see cref="GeometryGroup"/>.
@@ -45,7 +45,7 @@ namespace Pablo.Graphics
                     throw new InvalidOperationException($"Nesting {nameof(GeometryGroup)}s in not supported.");
 
                 // Make an array from locked clones of provided geometries to prevent future immutibility violation.
-                _geometries = value?.Select(CloneAndLock).ToArray() ?? new Geometry[] { };
+                _geometries = value?.Select(g => (Geometry)g.ImmutableClone()).ToArray() ?? Array.Empty<Geometry>();
             }
         }
 
@@ -88,16 +88,6 @@ namespace Pablo.Graphics
         }
 
         /// <summary>
-        /// Clones the provided <see cref="Geometry"/> and sets it's IsReadOnly property.
-        /// </summary>
-        private static Geometry CloneAndLock(Geometry geometry)
-        {
-            var clone = (Geometry)geometry.Clone();
-            clone.IsReadOnly = true;
-            return clone;
-        }
-
-        /// <summary>
         /// Must be implemented by all <see cref="Geometry"/> 
         /// subclasses to provide a mean of translation.
         /// </summary>
@@ -115,7 +105,7 @@ namespace Pablo.Graphics
         protected override CloneableObject CreateInstanceOverride()
         {
             // Defensively copy the geometries.
-            return new GeometryGroup { _geometries = _geometries.Select(CloneAndLock).ToArray() };
+            return new GeometryGroup { _geometries = _geometries.Select(g => (Geometry)g.ImmutableClone()).ToArray() };
         }
 
         /// <summary>

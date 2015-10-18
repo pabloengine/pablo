@@ -23,7 +23,7 @@ namespace Pablo.Graphics
         /// <summary>
         /// The array of <see cref="Point"/>s in the <see cref="PolylineGeometry"/>.
         /// </summary>
-        private Point[] _points = { };
+        private Point[] _points = Array.Empty<Point>();
 
         /// <summary>
         /// Gets or sets the <see cref="Point"/>s in the <see cref="PolylineGeometry"/>.
@@ -40,7 +40,7 @@ namespace Pablo.Graphics
             set
             {
                 ThrowOnReadOnly();
-                _points = value?.ToArray() ?? new Point[] { };
+                _points = value?.ToArray() ?? Array.Empty<Point>();
             }
         }
 
