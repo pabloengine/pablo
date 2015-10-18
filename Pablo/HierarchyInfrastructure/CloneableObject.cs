@@ -106,6 +106,31 @@ namespace Pablo
         public CloneableObject MutableClone() => CloneImpl();
 
         /// <summary>
+        /// Returns a deep, immutable clone of this object.
+        /// </summary>
+        /// <remarks>
+        /// <para>This function will return itself as the clone if it is read only.</para>
+        /// <para>This function will call CreateInstanceOverride to get a new instance.</para>
+        /// <para>This function will call CloneOverride to update properties.</para>
+        /// </remarks>
+        /// <exception cref="CloneException">Cloning failed</exception>
+        public CloneableObject ImmutableClone()
+        {
+            // Return itself if it's already read only.
+            if (IsReadOnly)
+                return this;
+
+            // Otherwise make a clone...
+            var clone = CloneImpl();
+            
+            // Make it immutable...
+            clone.IsReadOnly = true;
+
+            // And return the clone.
+            return clone;
+        }
+        
+        /// <summary>
         /// Returns a deep clone of this object.
         /// </summary>
         /// <remarks>
@@ -121,7 +146,7 @@ namespace Pablo
         }
 
         /// <summary>
-        /// Implementation of <see cref="Clone"/> method.
+        /// General cloning implementation method.
         /// </summary>
         /// <exception cref="CloneException">Cloning failed</exception>
         private CloneableObject CloneImpl()

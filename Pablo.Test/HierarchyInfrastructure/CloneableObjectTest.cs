@@ -66,13 +66,28 @@ namespace Pablo.Test.HierarchyInfrastructure
             var cloneable = new GoodCloneableObject();
 
             Assert.AreNotSame(cloneable, cloneable.Clone());
+
             cloneable.IsReadOnly = true;
             Assert.AreSame(cloneable, cloneable.Clone());
+
             var mutableClone = (GoodCloneableObject)cloneable.MutableClone();
             Assert.AreNotSame(cloneable, mutableClone);
             Assert.DoesNotThrow(() =>
             {
                 mutableClone.SomeProperty = 7;
+            });
+
+            cloneable = new GoodCloneableObject();
+            var readonlyClone = (GoodCloneableObject)cloneable.ImmutableClone();
+            Assert.AreNotSame(cloneable, readonlyClone);
+
+            cloneable.IsReadOnly = true;
+            readonlyClone = (GoodCloneableObject)cloneable.ImmutableClone();
+            Assert.AreSame(cloneable, readonlyClone);
+
+            Assert.Throws<InvalidOperationException>(() =>
+            {
+                readonlyClone.SomeProperty = 7;
             });
         }
 
