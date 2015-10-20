@@ -168,7 +168,7 @@ namespace Pablo.Graphics
             while (reader.NodeType == XmlNodeType.Element)
             {
                 // Qualify the name to match this namespace and type.
-                var type = Type.GetType($"{nameof(Pablo)}.{nameof(Graphics)}.{reader.Name}");
+                var type = Type.GetType($"{GetType().Namespace}.{reader.Name}");
 
                 // Make sure the type exists!
                 if(type == null)
