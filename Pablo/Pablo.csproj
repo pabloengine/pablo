@@ -47,6 +47,10 @@
     <Compile Include="Graphics\BaseTypes\Box.cs" />
     <Compile Include="Graphics\BaseTypes\Color.cs" />
     <Compile Include="Graphics\BaseTypes\Colors.cs" />
+    <Compile Include="Graphics\Pattern\Stripe.cs" />
+    <Compile Include="Graphics\Brush\Brush.cs" />
+    <Compile Include="Graphics\Brush\StripePatternBrush.cs" />
+    <Compile Include="Graphics\Brush\SolidColorBrush.cs" />
     <Compile Include="Graphics\Geometry\PolygonGeometry.cs" />
     <Compile Include="Graphics\BaseTypes\FontDecoration.cs" />
     <Compile Include="Graphics\BaseTypes\FontStyle.cs" />
