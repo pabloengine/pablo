@@ -66,8 +66,10 @@
     <Compile Include="Graphics\Geometry\LineGeometry.cs" />
     <Compile Include="Graphics\Geometry\PolylineGeometry.cs" />
     <Compile Include="Graphics\Geometry\TextGeometry.cs" />
+    <Compile Include="Graphics\Shape\Shape.cs" />
     <Compile Include="Graphics\TextUtils\ITextLayoutMeasure.cs" />
     <Compile Include="Graphics\TextUtils\DefaultTextLayoutMeasure.cs" />
+    <Compile Include="Graphics\VisualElement.cs" />
     <Compile Include="HierarchyInfrastructure\Binder.cs" />
     <Compile Include="HierarchyInfrastructure\BindingTypeMismatchExceprtion.cs" />
     <Compile Include="HierarchyInfrastructure\BindingExceprtion.cs" />
@@ -84,6 +86,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets" Condition="Exists('..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
