@@ -15,32 +15,43 @@ namespace Pablo
     /// </summary>
     public sealed class HierarchicalProperty
     {
+        /// <summary>
+        /// The parser function used to parse properties represented by this <see cref="HierarchicalProperty"/>.
+        /// </summary>
         readonly Func<string, object> _parser;
+
+        /// <summary>
+        /// The parser function used to generate default values for properties represented by this <see cref="HierarchicalProperty"/>.
+        /// </summary>
         readonly Func<object> _defaultFactory;
+
+        /// <summary>
+        /// The parser function used to clone properties represented by this <see cref="HierarchicalProperty"/>.
+        /// </summary>
         readonly Func<object, object> _cloner;
 
         /// <summary>
-        /// The name of the property.
+        /// The name of the <see cref="HierarchicalProperty"/>.
         /// </summary>
         public string Name { get; }
 
         /// <summary>
-        /// The type of the property.
+        /// The type of the <see cref="HierarchicalProperty"/>.
         /// </summary>
         public Type Type { get; }
 
         /// <summary>
-        /// Indicates whether this property can be inherited.
+        /// Indicates whether this <see cref="HierarchicalProperty"/> can be inherited.
         /// </summary>
         public bool IsInheritable { get; }
 
         /// <summary>
-        /// The type that registered this property.
+        /// The type that registered this <see cref="HierarchicalProperty"/>.
         /// </summary>
         public Type Owner { get; }
 
         /// <summary>
-        /// Get the default value of this property.
+        /// Get the default value of this <see cref="HierarchicalProperty"/>.
         /// </summary>
         /// <exception cref="PropertyException">Default generation failed</exception>
         public object Default
@@ -116,7 +127,7 @@ namespace Pablo
                                    || typeof(ICloneable).IsAssignableFrom(Type);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Pablo.HierarchicalProperty"/> class.
+        /// Initializes a new instance of the <see cref="HierarchicalProperty"/> class.
         /// </summary>
         internal HierarchicalProperty(Type owner,
                                       string name,
@@ -148,7 +159,7 @@ namespace Pablo
         }
 
         /// <summary>
-        /// Parses an instance of this property from the provided string.
+        /// Parses an instance of this <see cref="HierarchicalProperty"/> from the provided <see cref="string"/>.
         /// </summary>
         /// <exception cref="ArgumentNullException">s is null</exception>
         /// <exception cref="PropertyException">Parsing failed</exception>
