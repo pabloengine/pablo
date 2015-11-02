@@ -36,13 +36,13 @@ namespace Pablo
         #region DataContext
 
         /// <summary>
-        /// Identifies the <see cref="DataContext"/> hierarchical property.
+        /// Identifies the <see cref="DataContext"/> <see cref="HierarchicalProperty"/>.
         /// </summary>
         public static readonly HierarchicalProperty DataContextProperty =
             RegisterProperty(typeof(HierarchicalObject), nameof(DataContext), typeof(object), true);
 
         /// <summary>
-        /// Gets or sets the data context of this object.
+        /// Gets or sets the data context of this <see cref="HierarchicalObject"/>.
         /// </summary>
         /// <remarks>
         /// To allow cloning of this object the data context needs to be 
