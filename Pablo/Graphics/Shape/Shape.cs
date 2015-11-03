@@ -29,6 +29,11 @@ namespace Pablo.Graphics
         public abstract double Height { get; }
 
         /// <summary>
+        /// Determines whether the <see cref="Shape"/> is closed.
+        /// </summary>
+        public abstract bool IsClosed { get; }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="Shape"/>.
         /// </summary>
         internal Shape() { }
