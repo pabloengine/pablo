@@ -68,7 +68,7 @@ namespace Pablo.Graphics
         public Brush BackgroundBrush
         {
             get { return (Brush)GetValue(BackgroundBrushProperty); }
-            set { SetValue(BackgroundBrushProperty, value); }
+            set { SetValue(BackgroundBrushProperty, value?.ImmutableClone()); }
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Pablo.Graphics
         public Brush ForegroundBrush
         {
             get { return (Brush)GetValue(ForegroundBrushProperty); }
-            set { SetValue(ForegroundBrushProperty, value); }
+            set { SetValue(ForegroundBrushProperty, value?.ImmutableClone()); }
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Pablo.Graphics
         public Brush FillBrush
         {
             get { return (Brush)GetValue(FillBrushProperty); }
-            set { SetValue(FillBrushProperty, value); }
+            set { SetValue(FillBrushProperty, value?.ImmutableClone()); }
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Pablo.Graphics
         public Brush StrokeBrush
         {
             get { return (Brush)GetValue(StrokeBrushProperty); }
-            set { SetValue(StrokeBrushProperty, value); }
+            set { SetValue(StrokeBrushProperty, value?.ImmutableClone()); }
         }
 
         /// <summary>
