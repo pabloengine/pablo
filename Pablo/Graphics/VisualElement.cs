@@ -70,6 +70,7 @@ namespace Pablo.Graphics
             get { return (Brush)GetValue(BackgroundBrushProperty); }
             set { SetValue(BackgroundBrushProperty, value); }
         }
+
         /// <summary>
         /// Gets or sets the foreground <see cref="Brush"/> of the <see cref="VisualElement"/>.
         /// </summary>
@@ -78,6 +79,7 @@ namespace Pablo.Graphics
             get { return (Brush)GetValue(ForegroundBrushProperty); }
             set { SetValue(ForegroundBrushProperty, value); }
         }
+
         /// <summary>
         /// Gets or sets the fill <see cref="Brush"/> of the <see cref="VisualElement"/>.
         /// </summary>
@@ -86,6 +88,7 @@ namespace Pablo.Graphics
             get { return (Brush)GetValue(FillBrushProperty); }
             set { SetValue(FillBrushProperty, value); }
         }
+
         /// <summary>
         /// Gets or sets the stroke <see cref="Brush"/> of the <see cref="VisualElement"/>.
         /// </summary>
@@ -112,6 +115,7 @@ namespace Pablo.Graphics
             get { return (StrokeType)GetValue(StrokeTypeProperty); }
             set { SetValue(StrokeTypeProperty, value); }
         }
+
         /// <summary>
         /// Gets or sets the stroke scale of the <see cref="VisualElement"/>.
         /// </summary>
@@ -120,6 +124,7 @@ namespace Pablo.Graphics
             get { return (double)GetValue(StrokeScaleProperty); }
             set { SetValue(StrokeScaleProperty, value); }
         }
+
         /// <summary>
         /// Gets or sets the stroke weight of the <see cref="VisualElement"/>.
         /// </summary>
