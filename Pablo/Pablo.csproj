@@ -47,6 +47,7 @@
     <Compile Include="Graphics\BaseTypes\Box.cs" />
     <Compile Include="Graphics\BaseTypes\Color.cs" />
     <Compile Include="Graphics\BaseTypes\Colors.cs" />
+    <Compile Include="Graphics\Helpers\EmptyGeometry.cs" />
     <Compile Include="Graphics\Pattern\Stripe.cs" />
     <Compile Include="Graphics\Brush\Brush.cs" />
     <Compile Include="Graphics\Brush\StripePatternBrush.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Graphics\Geometry\LineGeometry.cs" />
     <Compile Include="Graphics\Geometry\PolylineGeometry.cs" />
     <Compile Include="Graphics\Geometry\TextGeometry.cs" />
+    <Compile Include="Graphics\Shape\Shape%271.cs" />
     <Compile Include="Graphics\Shape\Shape.cs" />
     <Compile Include="Graphics\TextUtils\ITextLayoutMeasure.cs" />
     <Compile Include="Graphics\TextUtils\DefaultTextLayoutMeasure.cs" />
