@@ -14,49 +14,49 @@ namespace Pablo.Graphics
     public abstract class VisualElement : HierarchicalObject
     {
         /// <summary>
-        /// Identifies the <see cref="BackgroundBrush"/> <see cref="HierarchicalProperty"/>.
+        /// Identifies the <see cref="BackgroundBrush"/> <see cref="HierarchicalProperty"/> of the <see cref="VisualElement"/>.
         /// </summary>
         public static readonly HierarchicalProperty BackgroundBrushProperty
             = RegisterProperty(typeof(VisualElement), nameof(BackgroundBrush), typeof(Brush));
 
         /// <summary>
-        /// Identifies the <see cref="ForegroundBrush"/> <see cref="HierarchicalProperty"/>.
+        /// Identifies the <see cref="ForegroundBrush"/> <see cref="HierarchicalProperty"/> of the <see cref="VisualElement"/>.
         /// </summary>
         public static readonly HierarchicalProperty ForegroundBrushProperty
             = RegisterProperty(typeof(VisualElement), nameof(ForegroundBrush), typeof(Brush), true);
 
         /// <summary>
-        /// Identifies the <see cref="FillBrush"/> <see cref="HierarchicalProperty"/>.
+        /// Identifies the <see cref="FillBrush"/> <see cref="HierarchicalProperty"/> of the <see cref="VisualElement"/>.
         /// </summary>
         public static readonly HierarchicalProperty FillBrushProperty
             = RegisterProperty(typeof(VisualElement), nameof(FillBrush), typeof(Brush));
 
         /// <summary>
-        /// Identifies the <see cref="StrokeBrush"/> <see cref="HierarchicalProperty"/>.
+        /// Identifies the <see cref="StrokeBrush"/> <see cref="HierarchicalProperty"/> of the <see cref="VisualElement"/>.
         /// </summary>
         public static readonly HierarchicalProperty StrokeBrushProperty
             = RegisterProperty(typeof(VisualElement), nameof(StrokeBrush), typeof(Brush), true);
 
         /// <summary>
-        /// Identifies the <see cref="LineJoin"/> <see cref="HierarchicalProperty"/>.
+        /// Identifies the <see cref="LineJoin"/> <see cref="HierarchicalProperty"/> of the <see cref="VisualElement"/>.
         /// </summary>
         public static readonly HierarchicalProperty LineJoinProperty
             = RegisterProperty(typeof(VisualElement), nameof(LineJoin), typeof(LineJoin));
 
         /// <summary>
-        /// Identifies the <see cref="StrokeType"/> <see cref="HierarchicalProperty"/>.
+        /// Identifies the <see cref="StrokeType"/> <see cref="HierarchicalProperty"/> of the <see cref="VisualElement"/>.
         /// </summary>
         public static readonly HierarchicalProperty StrokeTypeProperty
             = RegisterProperty(typeof(VisualElement), nameof(StrokeType), typeof(StrokeType));
 
         /// <summary>
-        /// Identifies the <see cref="StrokeScale"/> <see cref="HierarchicalProperty"/>.
+        /// Identifies the <see cref="StrokeScale"/> <see cref="HierarchicalProperty"/> of the <see cref="VisualElement"/>.
         /// </summary>
         public static readonly HierarchicalProperty StrokeScaleProperty
             = RegisterProperty(typeof(VisualElement), nameof(StrokeScale), typeof(double));
 
         /// <summary>
-        /// Identifies the <see cref="StrokeWeight"/> <see cref="HierarchicalProperty"/>.
+        /// Identifies the <see cref="StrokeWeight"/> <see cref="HierarchicalProperty"/> of the <see cref="VisualElement"/>.
         /// </summary>
         public static readonly HierarchicalProperty StrokeWeightProperty
             = RegisterProperty(typeof(VisualElement), nameof(StrokeWeight), typeof(double), true,
