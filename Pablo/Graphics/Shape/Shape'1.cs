@@ -51,5 +51,10 @@ namespace Pablo.Graphics
         /// </summary>
         public override bool IsClosed => Geometry.IsClosed;
         
+        /// <summary>
+        /// Initializes a new instance of <see cref="Shape{TGeometry}"/>.
+        /// </summary>
+        internal Shape() { }
+
     }
 }
