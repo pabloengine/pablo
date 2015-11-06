@@ -42,7 +42,7 @@ namespace Pablo.Graphics
 
                 // Disallow nested groups to keep plotter API simple.
                 if (value != null && value.OfType<GeometryGroup>().Any())
-                    throw new InvalidOperationException($"Nesting {nameof(GeometryGroup)}s in not supported.");
+                    throw new InvalidOperationException($"Nesting {nameof(GeometryGroup)}s is not supported.");
 
                 // Make an array from locked clones of provided geometries to prevent future immutibility violation.
                 _geometries = value?.Select(g => (Geometry)g.ImmutableClone()).ToArray() ?? Array.Empty<Geometry>();
