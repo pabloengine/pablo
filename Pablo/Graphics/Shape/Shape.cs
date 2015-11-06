@@ -9,32 +9,55 @@
 namespace Pablo.Graphics
 {
     /// <summary>
-    /// Base type for all the shapes.
+    /// Base type for all the shapes with geometry.
     /// </summary>
-    public abstract class Shape : VisualElement
+    /// <typeparam name="TGeometry">The geometry type that describes this shape.</typeparam>
+    public abstract class Shape<TGeometry> : VisualElement, IShape where TGeometry : Geometry, new()
     {
-        /// <summary>
-        /// Gets the bounding box of the <see cref="Shape"/>.
-        /// </summary>
-        public abstract Box BoundingBox { get; }
 
         /// <summary>
-        /// Gets the width of the <see cref="Shape"/>.
+        /// Identifies the <see cref="Geometry"/> of the <see cref="Shape{TGeometry}"/>.
         /// </summary>
-        public abstract double Width { get; }
+        public static readonly HierarchicalProperty GeometryProperty
+            = RegisterProperty(typeof(Shape<TGeometry>), nameof(BackgroundBrush), typeof(TGeometry),
+                defaultFactory: () => EmptyGeometry<TGeometry>.Value);
 
         /// <summary>
-        /// Gets the height of the <see cref="Shape"/>.
+        /// Gets or sets the <see cref="TGeometry"/> that describes the <see cref="Shape{TGeometry}"/>.
         /// </summary>
-        public abstract double Height { get; }
+        public TGeometry Geometry
+        {
+            get { return (TGeometry)GetValue(GeometryProperty); }
+            set { SetValue(GeometryProperty, value?.ImmutableClone()); }
+        }
 
         /// <summary>
-        /// Determines whether the <see cref="Shape"/> is closed.
+        /// Gets the <see cref="Graphics.Geometry"/> of the <see cref="IShape"/>.
         /// </summary>
-        public abstract bool IsClosed { get; }
+        Geometry IShape.Geometry => Geometry;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Shape"/>.
+        /// Gets the bounding <see cref="Box"/> of the <see cref="Shape{TGeometry}"/>.
+        /// </summary>
+        public Box BoundingBox => Geometry.BoundingBox;
+
+        /// <summary>
+        /// Gets the width of the <see cref="Shape{TGeometry}"/>.
+        /// </summary>
+        public double Width => BoundingBox.Width;
+
+        /// <summary>
+        /// Gets the height of the <see cref="Shape{TGeometry}"/>.
+        /// </summary>
+        public double Height => BoundingBox.Height;
+
+        /// <summary>
+        /// Determines whether the <see cref="Shape{TGeometry}"/> is closed.
+        /// </summary>
+        public bool IsClosed => Geometry.IsClosed;
+
+        /// <summary>
+        /// Initializes a new instance of <see cref="Shape{TGeometry}"/>.
         /// </summary>
         internal Shape() { }
 

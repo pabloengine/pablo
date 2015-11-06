@@ -9,39 +9,34 @@
 namespace Pablo.Graphics
 {
     /// <summary>
-    /// Displays a ellipse described by an <see cref="EllipseGeometry"/>.
+    /// Displays a circle described by an <see cref="EllipseGeometry"/>.
     /// </summary>
-    public sealed class Ellipse : Shape<EllipseGeometry>
+    public sealed class Circle : Shape<EllipseGeometry>
     {
         /// <summary>
-        /// Gets the center point of the <see cref="Ellipse"/>.
+        /// Gets the center point of the <see cref="Circle"/>.
         /// </summary>
         public Point Center => Geometry.Center;
 
         /// <summary>
-        /// Gets the radius along the x axis of the <see cref="Ellipse"/>.
+        /// Gets the radius of the <see cref="Circle"/>.
         /// </summary>
         public double RadiusX => Geometry.RadiusX;
 
         /// <summary>
-        /// Gets the radius along the y axis of the <see cref="Ellipse"/>.
+        /// Initializes a new instance of <see cref="Circle"/>.
         /// </summary>
-        public double RadiusY => Geometry.RadiusY;
+        public Circle() { }
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Ellipse"/>.
+        /// Initializes a new instance of <see cref="Circle"/> with the provided center <see cref="Point"/> and radius.
         /// </summary>
-        public Ellipse() { }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="Ellipse"/> with the provided center <see cref="Point"/> and radiuses.
-        /// </summary>
-        public Ellipse(Point center, double radiusX, double radiusY)
+        public Circle(Point center, double radius)
         {
             Geometry = new EllipseGeometry
             {
-                RadiusX = radiusX,
-                RadiusY = radiusY,
+                RadiusX = radius,
+                RadiusY = radius,
                 Center = center,
                 IsReadOnly = true,
             };

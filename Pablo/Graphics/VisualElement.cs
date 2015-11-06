@@ -11,7 +11,7 @@ namespace Pablo.Graphics
     /// <summary>
     /// Base type for all visual elements.
     /// </summary>
-    public abstract class VisualElement : HierarchicalObject
+    public abstract class VisualElement : HierarchicalObject, IVisualElement
     {
         /// <summary>
         /// Identifies the <see cref="BackgroundBrush"/> <see cref="HierarchicalProperty"/> of the <see cref="VisualElement"/>.

@@ -69,12 +69,15 @@
     <Compile Include="Graphics\Geometry\TextGeometry.cs" />
     <Compile Include="Graphics\Shape\Block.cs" />
     <Compile Include="Graphics\Shape\Curve.cs" />
+    <Compile Include="Graphics\Shape\Circle.cs" />
     <Compile Include="Graphics\Shape\Ellipse.cs" />
     <Compile Include="Graphics\Shape\Line.cs" />
-    <Compile Include="Graphics\Shape\Shape%271.cs" />
+    <Compile Include="Graphics\Shape\Polygon.cs" />
     <Compile Include="Graphics\Shape\Shape.cs" />
+    <Compile Include="Graphics\Shape\IShape.cs" />
     <Compile Include="Graphics\TextUtils\ITextLayoutMeasure.cs" />
     <Compile Include="Graphics\TextUtils\DefaultTextLayoutMeasure.cs" />
+    <Compile Include="Graphics\IVisualElement.cs" />
     <Compile Include="Graphics\VisualElement.cs" />
     <Compile Include="HierarchyInfrastructure\Binder.cs" />
     <Compile Include="HierarchyInfrastructure\BindingTypeMismatchExceprtion.cs" />
