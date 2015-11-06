@@ -67,6 +67,7 @@
     <Compile Include="Graphics\Geometry\LineGeometry.cs" />
     <Compile Include="Graphics\Geometry\PolylineGeometry.cs" />
     <Compile Include="Graphics\Geometry\TextGeometry.cs" />
+    <Compile Include="Graphics\Shape\Block.cs" />
     <Compile Include="Graphics\Shape\Curve.cs" />
     <Compile Include="Graphics\Shape\Ellipse.cs" />
     <Compile Include="Graphics\Shape\Line.cs" />
@@ -91,12 +92,4 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets" Condition="Exists('..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\GtkSharp.3.1.2\build\net45\GtkSharp.targets'))" />
-  </Target>
 </Project>
