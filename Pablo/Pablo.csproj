@@ -67,6 +67,7 @@
     <Compile Include="Graphics\Geometry\LineGeometry.cs" />
     <Compile Include="Graphics\Geometry\PolylineGeometry.cs" />
     <Compile Include="Graphics\Geometry\TextGeometry.cs" />
+    <Compile Include="Graphics\Shape\Curve.cs" />
     <Compile Include="Graphics\Shape\Line.cs" />
     <Compile Include="Graphics\Shape\Shape%271.cs" />
     <Compile Include="Graphics\Shape\Shape.cs" />
