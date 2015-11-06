@@ -11,7 +11,7 @@ namespace Pablo.Graphics
     /// <summary>
     /// Represents an empty <see cref="Geometry"/> object.
     /// </summary>
-    internal static class EmptyGeometry<TGeometry> where TGeometry: Geometry, new()
+    internal static class EmptyGeometry<TGeometry> where TGeometry : Geometry, new()
     {
         /// <summary>
         /// The empty <see cref="Geometry"/> value.
@@ -19,6 +19,6 @@ namespace Pablo.Graphics
         /// <remarks>
         /// This is a singleton, readonly object. 
         /// </remarks>
-        public static readonly TGeometry Value = new TGeometry {IsReadOnly = true};
+        public static readonly TGeometry Value = new TGeometry { IsReadOnly = true };
     }
 }

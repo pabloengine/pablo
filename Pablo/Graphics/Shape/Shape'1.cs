@@ -19,7 +19,7 @@ namespace Pablo.Graphics
         /// Identifies the <see cref="Geometry"/> of the <see cref="Shape{TGeometry}"/>.
         /// </summary>
         public static readonly HierarchicalProperty GeometryProperty
-            = RegisterProperty(typeof(Shape<TGeometry>), nameof(BackgroundBrush), typeof(TGeometry), 
+            = RegisterProperty(typeof(Shape<TGeometry>), nameof(BackgroundBrush), typeof(TGeometry),
                 defaultFactory: () => EmptyGeometry<TGeometry>.Value);
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Pablo.Graphics
         /// Determines whether the <see cref="Shape"/> is closed.
         /// </summary>
         public override bool IsClosed => Geometry.IsClosed;
-        
+
         /// <summary>
         /// Initializes a new instance of <see cref="Shape{TGeometry}"/>.
         /// </summary>
