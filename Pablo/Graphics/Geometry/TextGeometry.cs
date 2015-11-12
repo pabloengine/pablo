@@ -130,6 +130,7 @@ namespace Pablo.Graphics
         /// Setting the font height does not stretch the <see cref="TextGeometry"/>
         /// but scale it. As does <see cref="TextWidth"/>.
         /// </remarks>
+        /// <exception cref="InvalidOperationException">value must not be less than zero</exception>
         public double FontHeight
         {
             get { return _fontHeight; }
