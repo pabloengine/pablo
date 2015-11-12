@@ -31,17 +31,17 @@ namespace Pablo.Graphics
         private string _fontFamily;
 
         /// <summary>
-        /// The font style of the <see cref="TextGeometry"/>.
+        /// The <see cref="Graphics.FontStyle"/> of the <see cref="TextGeometry"/>.
         /// </summary>
         private FontStyle _fontStyle;
 
         /// <summary>
-        /// The font weight of the <see cref="TextGeometry"/>.
+        /// The <see cref="Graphics.FontWeight"/> of the <see cref="TextGeometry"/>.
         /// </summary>
         private FontWeight _fontWeight;
 
         /// <summary>
-        /// The font decoration of the <see cref="TextGeometry"/>.
+        /// The <see cref="Graphics.FontDecoration"/> of the <see cref="TextGeometry"/>.
         /// </summary>
         private FontDecoration _fontDecoration;
 
@@ -84,7 +84,7 @@ namespace Pablo.Graphics
         }
 
         /// <summary>
-        /// Gets or sets the font style of the <see cref="TextGeometry"/>.
+        /// Gets or sets the <see cref="Graphics.FontStyle"/> of the <see cref="TextGeometry"/>.
         /// </summary>
         public FontStyle FontStyle
         {
@@ -97,7 +97,7 @@ namespace Pablo.Graphics
         }
 
         /// <summary>
-        /// Gets or sets the font weight of the <see cref="TextGeometry"/>.
+        /// Gets or sets the <see cref="Graphics.FontWeight"/> of the <see cref="TextGeometry"/>.
         /// </summary>
         public FontWeight FontWeight
         {
@@ -110,7 +110,7 @@ namespace Pablo.Graphics
         }
 
         /// <summary>
-        /// Gets or sets the font decoration of the <see cref="TextGeometry"/>.
+        /// Gets or sets the <see cref="Graphics.FontDecoration"/> of the <see cref="TextGeometry"/>.
         /// </summary>
         public FontDecoration FontDecoration
         {
