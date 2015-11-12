@@ -74,6 +74,7 @@
     <Compile Include="Graphics\Shape\Line.cs" />
     <Compile Include="Graphics\Shape\Polygon.cs" />
     <Compile Include="Graphics\Shape\Polyline.cs" />
+    <Compile Include="Graphics\Shape\Rectangle.cs" />
     <Compile Include="Graphics\Shape\Shape.cs" />
     <Compile Include="Graphics\Shape\IShape.cs" />
     <Compile Include="Graphics\TextUtils\ITextLayoutMeasure.cs" />
