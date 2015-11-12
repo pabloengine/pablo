@@ -14,7 +14,7 @@ namespace Pablo.Graphics
     /// <summary>
     /// Displays a rectangle described by a <see cref="PolygonGeometry"/>.
     /// </summary>
-    public class Rectangle : Shape<PolygonGeometry>
+    public sealed class Rectangle : Shape<PolygonGeometry>
     {
 
         /// <summary>

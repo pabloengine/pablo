@@ -11,7 +11,7 @@ namespace Pablo.Graphics
     /// <summary>
     /// Displays a text described by a <see cref="TextGeometry"/>.
     /// </summary>
-    public class Text : Shape<TextGeometry>
+    public sealed class Text : Shape<TextGeometry>
     {
 
         /// <summary>
