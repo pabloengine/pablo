@@ -128,7 +128,7 @@ namespace Pablo.Graphics
         /// </summary>
         /// <remarks>
         /// Setting the font height does not stretch the <see cref="TextGeometry"/>
-        /// but scale it. As does <see cref="TextWidth"/>
+        /// but scale it. As does <see cref="TextWidth"/>.
         /// </remarks>
         public double FontHeight
         {
