@@ -77,9 +77,11 @@
     <Compile Include="Graphics\Shape\Rectangle.cs" />
     <Compile Include="Graphics\Shape\Shape.cs" />
     <Compile Include="Graphics\Shape\IShape.cs" />
+    <Compile Include="Graphics\Shape\Text.cs" />
     <Compile Include="Graphics\TextUtils\ITextLayoutMeasure.cs" />
     <Compile Include="Graphics\TextUtils\DefaultTextLayoutMeasure.cs" />
     <Compile Include="Graphics\IVisualElement.cs" />
+    <Compile Include="Graphics\TextUtils\TextBuilder.cs" />
     <Compile Include="Graphics\VisualElement.cs" />
     <Compile Include="HierarchyInfrastructure\Binder.cs" />
     <Compile Include="HierarchyInfrastructure\BindingTypeMismatchExceprtion.cs" />
