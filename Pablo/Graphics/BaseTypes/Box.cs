@@ -93,7 +93,6 @@ namespace Pablo.Graphics
         /// </summary>
         /// <exception cref="ArgumentException">left &gt; right or top &lt; bottom</exception>
         public Box(double left, double top, double right, double bottom)
-            : this()
         {
 
             if (left > right || top < bottom)
