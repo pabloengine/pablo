@@ -21,6 +21,6 @@ namespace Pablo.Graphics
         /// <summary>
         /// Arrange vertically.
         /// </summary>
-        Vertical
+        Vertical,
     }
 }

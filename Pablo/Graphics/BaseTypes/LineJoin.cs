@@ -26,6 +26,6 @@ namespace Pablo.Graphics
         /// <summary>
         /// This produces a smooth, circular arc between the lines.
         /// </summary>
-        Round
+        Round,
     }
 }

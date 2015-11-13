@@ -26,6 +26,6 @@ namespace Pablo.Graphics
         /// <summary>
         /// Align to the right.
         /// </summary>
-        Right
+        Right,
     }
 }

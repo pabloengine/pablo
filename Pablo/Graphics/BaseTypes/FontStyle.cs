@@ -22,7 +22,7 @@ namespace Pablo.Graphics
         /// <summary>
         /// Specifies an "Italic" font style.
         /// </summary>
-        Italic
+        Italic,
 
     }
 }

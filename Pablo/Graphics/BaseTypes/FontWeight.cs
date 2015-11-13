@@ -42,7 +42,6 @@ namespace Pablo.Graphics
         /// <summary>
         /// Specifies a "Black" font weight.
         /// </summary>
-        Black
-
+        Black,
     }
 }

@@ -27,6 +27,6 @@ namespace Pablo.Graphics
         /// <summary>
         /// Specifies an "Underlined" font decoration.
         /// </summary>
-        Underlined
+        Underlined,
     }
 }

@@ -27,10 +27,5 @@ namespace Pablo.Graphics
         /// This produces a dash-dotted line.
         /// </summary>
         DashDot,
-
-        /// <summary>
-        /// This produces a zigzag line.
-        /// </summary>
-        Zigzag
     }
 }

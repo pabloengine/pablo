@@ -26,6 +26,6 @@ namespace Pablo.Graphics
         /// <summary>
         /// The element is not visible but reserves it's space in the layout.
         /// </summary>
-        Hidden
+        Hidden,
     }
 }
