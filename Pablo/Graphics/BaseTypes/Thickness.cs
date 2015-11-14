@@ -36,10 +36,10 @@ namespace Pablo.Graphics
         /// </summary>
         public double Bottom { get; }
 
-
         /// <summary>
         /// Initializes a new instance of <see cref="Thickness"/> with uniform sides.
         /// </summary>
+        /// <exception cref="ArgumentException">size is less than zero</exception>
         public Thickness(double size)
         {
             if (size < 0)
@@ -54,6 +54,7 @@ namespace Pablo.Graphics
         /// <summary>
         /// Initializes a new instance of <see cref="Thickness"/> with different vertical and horizontal sides.
         /// </summary>
+        /// <exception cref="ArgumentException">All values must be more than zero less than zero</exception>
         public Thickness(double leftRight, double topBottom)
         {
             if (leftRight < 0 || topBottom < 0)
@@ -68,6 +69,7 @@ namespace Pablo.Graphics
         /// <summary>
         /// Initializes a new instance of <see cref="Thickness"/> with different sides.
         /// </summary>
+        /// <exception cref="ArgumentException">All values must be more than zero less than zero</exception>
         public Thickness(double left, double top, double right, double bottom)
         {
             if (left < 0 || top < 0 || right < 0 || bottom < 0)
