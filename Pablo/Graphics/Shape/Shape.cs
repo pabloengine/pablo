@@ -14,6 +14,7 @@ namespace Pablo.Graphics
     /// <typeparam name="TGeometry">The geometry type that describes this shape.</typeparam>
     public abstract class Shape<TGeometry> : VisualElement, IShape where TGeometry : Geometry, new()
     {
+        #region Geometry
 
         /// <summary>
         /// Identifies the <see cref="Geometry"/> of the <see cref="Shape{TGeometry}"/>.
@@ -30,6 +31,8 @@ namespace Pablo.Graphics
             get { return (TGeometry)GetValue(GeometryProperty); }
             set { SetValue(GeometryProperty, value?.ImmutableClone()); }
         }
+
+        #endregion
 
         /// <summary>
         /// Gets the <see cref="Graphics.Geometry"/> of the <see cref="IShape"/>.
