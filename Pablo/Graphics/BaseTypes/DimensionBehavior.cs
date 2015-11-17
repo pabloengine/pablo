@@ -14,11 +14,6 @@ namespace Pablo.Graphics
     public enum DimensionBehavior
     {
         /// <summary>
-        /// Statically measure the dimension.
-        /// </summary>
-        Static,
-
-        /// <summary>
         /// Shrink to minimum possible value.
         /// </summary>
         Shrink,
@@ -37,5 +32,10 @@ namespace Pablo.Graphics
         /// Measure proportional to maximum possible value, 
         /// </summary>
         Proportional,
+
+        /// <summary>
+        /// Statically measure the dimension.
+        /// </summary>
+        Static,
     }
 }
