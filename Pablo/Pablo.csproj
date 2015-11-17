@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -47,6 +47,13 @@
     <Compile Include="Graphics\BaseTypes\Box.cs" />
     <Compile Include="Graphics\BaseTypes\Color.cs" />
     <Compile Include="Graphics\BaseTypes\Colors.cs" />
+    <Compile Include="Graphics\BaseTypes\Dimension.cs" />
+    <Compile Include="Graphics\BaseTypes\HorizontalAlignment.cs" />
+    <Compile Include="Graphics\BaseTypes\Orientation.cs" />
+    <Compile Include="Graphics\BaseTypes\DimensionBehavior.cs" />
+    <Compile Include="Graphics\BaseTypes\Thickness.cs" />
+    <Compile Include="Graphics\BaseTypes\VerticalAlignment.cs" />
+    <Compile Include="Graphics\BaseTypes\Visibility.cs" />
     <Compile Include="Graphics\Helpers\EmptyGeometry.cs" />
     <Compile Include="Graphics\Pattern\Stripe.cs" />
     <Compile Include="Graphics\Brush\Brush.cs" />
